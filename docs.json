@@ -11,64 +11,6 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Merchants",
-        "groups": [
-          {
-            "group": "Welcome",
-            "pages": [
-              "index"
-            ]
-          },
-          {
-            "group": "Accepting Cashd",
-            "pages": [
-              "merchants/overview",
-              "merchants/eligibility",
-              "merchants/commercial-terms"
-            ]
-          },
-          {
-            "group": "Getting set up",
-            "pages": [
-              "merchants/account-setup",
-              "merchants/portal-first-login",
-              "merchants/team-and-roles",
-              "merchants/outlets"
-            ]
-          },
-          {
-            "group": "Running day to day",
-            "pages": [
-              "merchants/daily-operations",
-              "merchants/voids-and-disputes",
-              "merchants/settlements-and-reporting"
-            ]
-          },
-          {
-            "group": "Next steps",
-            "pages": [
-              "merchants/choosing-an-integration",
-              "merchants/support"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Providers",
-        "groups": [
-          {
-            "group": "Becoming a provider",
-            "pages": [
-              "providers/overview",
-              "providers/how-it-works",
-              "providers/requirements",
-              "providers/ecommerce-stores",
-              "providers/get-in-touch"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Integration",
         "groups": [
           {
