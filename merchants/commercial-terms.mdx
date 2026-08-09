@@ -1,0 +1,72 @@
+---
+title: "Commercial terms"
+description: "Merchant discount, VAT, settlement, and disputes."
+---
+
+Your merchant agreement is the authority on all figures. This page describes how
+each term works.
+
+## Merchant discount
+
+A percentage of the gross transaction value, deducted at settlement. The rate is
+set per merchant in your agreement.
+
+VAT applies to the discount portion only, not to the gross transaction value.
+
+## Rate stability
+
+The rate in force when a transaction is authorised is fixed to that transaction.
+A later rate change does not reprice transactions that have already been
+authorised.
+
+## Settlement
+
+| Item | Detail |
+|---|---|
+| Cycle | As agreed in your merchant agreement |
+| Destination | Your registered settlement IBAN |
+| Figures reported | Gross, discount, VAT, net, and the period covered |
+| IBAN handling | Masked in every API response and log |
+
+Each payout record states the period it covers. Reconcile against that period
+rather than assuming a fixed cadence.
+
+## Disputes
+
+Raise a discrepancy within 30 calendar days of the payout date, quoting the
+transaction identifiers concerned.
+
+## Reversals
+
+You can void a transaction within a configured window. The value returns to the
+customer's Cashd wallet.
+
+- Once a transaction is settled it cannot be voided through the API. Reversal
+  after settlement is handled manually with Cashd.
+- A void reverses the Cashd side only. Recovering goods, services, or credit you
+  have already released is your own process.
+
+See [Voids and disputes](/merchants/voids-and-disputes).
+
+## Stored value and store credit
+
+You may use Cashd to fund a wallet or store credit that you operate, subject to
+one condition.
+
+<Warning>
+Your wallet must be closed-loop. The balance may be spent on your own goods and
+services only. It must not be refundable to a card or bank account, withdrawable
+as cash, or transferable to another person.
+</Warning>
+
+Cashd converts restricted loyalty value into spending power at a named merchant.
+Value that can be withdrawn as cash falls outside Cashd's provider agreements and
+regulatory permissions. This condition is a standing term and applies to later
+product changes, not only at launch.
+
+If you credit the customer the full face value, the merchant discount is a cost
+of funds to you. Price it before launch.
+
+## Fees
+
+There is no setup or integration fee.

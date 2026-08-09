@@ -1,0 +1,49 @@
+---
+title: "Authentication"
+description: "API keys, rotation, and revocation."
+---
+
+Send your merchant key as a bearer credential on every request.
+
+```http
+Authorization: Bearer tc_live_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Content-Type: application/json
+```
+
+## Key format
+
+```
+tc_<env>_sk_<32 characters>
+   │    │
+   │    └── sk — secret key, server-side only
+   └─────── live — production
+            sb   — non-production
+```
+
+## Rules
+
+| Item | Requirement |
+|---|---|
+| Issuance | The plaintext key is shown once. Cashd stores only a SHA-256 hash and cannot recover it. |
+| Storage | A secrets manager. Never in source control, mobile binaries, or browser bundles. |
+| Rotation | Multiple active keys are supported. Issue the new key, deploy it, then revoke the old one. There is no downtime. |
+| Revocation | Immediate and irreversible. |
+| IP restriction | Per-merchant IP allow-listing is available on request. |
+
+The `tc_` prefix is recognised by common secret-scanning tools.
+
+<Warning>
+All Cashd calls are made from your backend. There is no publishable key and no
+client-side credential. A key embedded in a mobile app or web page must be
+revoked.
+</Warning>
+
+## Hosted checkout sessions
+
+Web Checkout uses a second credential: a single-use session token issued when you
+create a session. The session token authenticates the Cashd-hosted page only.
+
+- Your merchant key is not accepted on the hosted-page endpoints.
+- A session token is not accepted on merchant endpoints.
+
+See [Create a session](/integration/web-checkout/create-session).

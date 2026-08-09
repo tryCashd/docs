@@ -1,0 +1,56 @@
+---
+title: "Settlement and reconciliation"
+description: "Matching transactions and payouts to your own records."
+---
+
+## Three levels
+
+| Level | What you do |
+|---|---|
+| Per transaction | Store the Cashd transaction identifier and your idempotency key on your order record at creation |
+| Continuous | Resolve every record in a non-final state by reading it, on a schedule |
+| Per payout | Reconcile the payout against your own cleared transactions |
+
+The first makes the other two possible. Store both identifiers before you send
+the customer anywhere.
+
+## Payouts
+
+```http
+GET {base}/api/v1/merchant/settlements
+Authorization: Bearer tc_live_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Each payout record states gross, discount, VAT, net, the transaction count, and
+the period covered.
+
+```
+net = gross − discount − VAT
+```
+
+## Reconciling a payout
+
+<Steps>
+  <Step title="Match net to the bank credit">
+    The net figure is what arrives in your account.
+  </Step>
+  <Step title="Match the period">
+    Read the covered period from the payout record. Do not assume a fixed
+    cadence — the cycle is set in your merchant agreement.
+  </Step>
+  <Step title="Match line items">
+    Compare against transactions you recorded as `authorized` or `redeemed` in
+    that period.
+  </Step>
+  <Step title="Raise discrepancies">
+    Within 30 calendar days of the payout date, quoting transaction identifiers.
+  </Step>
+</Steps>
+
+## Common causes of a mismatch
+
+| Symptom | Likely cause |
+|---|---|
+| Your total exceeds the payout | Transactions voided after you fulfilled, or transactions that never reached `redeemed` |
+| The payout contains transactions you do not recognise | Your reconciliation is not recording outcomes — check for orders stuck in a non-final state |
+| Net is lower than expected | Discount and VAT. Compare against gross, not net |

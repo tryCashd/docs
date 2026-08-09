@@ -1,0 +1,46 @@
+---
+title: "bad_request"
+description: "HTTP 400 — caller error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `bad_request` |
+| HTTP status | `400` |
+| Class | Caller |
+| Surface | All surfaces |
+| Safe to retry | No, fix the request |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Some details couldn't be processed.
+| Hint | Check the phone number and amount, then try again. |
+
+## Cause
+
+The request was malformed — invalid JSON, a missing required field, or a value of the wrong type.
+
+## What to do
+
+1. Check required fields and types.
+2. Confirm money values are integers in halala, not decimals.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "bad_request",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/bad_request",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

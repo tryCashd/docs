@@ -1,0 +1,81 @@
+---
+title: "Go-live checklist"
+description: "What Cashd certifies before issuing production credentials."
+---
+
+Certification runs against the non-production environment. Demonstrate every
+applicable item.
+
+## Both options
+
+<Steps>
+  <Step title="Credentials and hygiene">
+    - [ ] Key held in a secrets manager; not in source control, mobile binaries, or browser bundles
+    - [ ] Rotation procedure documented and rehearsed
+    - [ ] `request_id` logged on every Cashd call
+  </Step>
+  <Step title="Idempotency">
+    - [ ] `X-Idempotency-Key` sent on all mutating calls and persisted on your order record
+    - [ ] Replay with the same key and body returns the stored response
+    - [ ] Same key with a different body returns `409` and is treated as a defect
+  </Step>
+  <Step title="Money safety">
+    - [ ] Unique constraint on the Cashd transaction identifier, demonstrated by reading the same successful transaction twice
+    - [ ] Reconciliation resolves an interrupted journey
+    - [ ] Void reverses correctly and your compensating action executes
+    - [ ] Void of a settled transaction is rejected
+    - [ ] Void outside the window is rejected
+    - [ ] Webhook handler tolerates duplicate and out-of-order delivery
+    - [ ] Reconciliation converges with webhooks disabled
+  </Step>
+  <Step title="Failure paths">
+    - [ ] Unregistered mobile number handled with a localised message and fallback
+    - [ ] Incorrect code, then attempts exhausted, leaves no order stuck
+    - [ ] Expiry mid-journey handled; a new payment can be started
+    - [ ] Partial coverage behaves per your chosen policy
+    - [ ] `502` and `504` produce one retry then fallback
+    - [ ] `429` produces exponential backoff, no retry storm
+  </Step>
+  <Step title="Operational readiness">
+    - [ ] One-time codes, full mobile numbers, credentials, and IBANs excluded from logs, analytics, crash reports, and session replay
+    - [ ] Alerting on authorisation success rate and on orders held in a non-final state
+    - [ ] Named operational contact registered with Cashd
+  </Step>
+</Steps>
+
+## Web Checkout only
+
+- [ ] Return-URL hosts registered; a session with an unregistered host is rejected
+- [ ] Universal link or app link returns to the application on mobile
+- [ ] Fulfilment happens on the `by_reference` read, not on the redirect
+- [ ] Interrupted-return test: the session is killed after a successful debit and reconciliation still completes the fulfilment
+- [ ] Open amount only: the order record is updated with the amount read at resolution
+
+## Direct API only
+
+- [ ] Code countdown rendered from `expires_at`, not hardcoded
+- [ ] Remaining attempts displayed
+- [ ] Resend control respects the per-number limit
+- [ ] Arabic and English copy verified for every failure state, right-to-left included
+- [ ] One-time code excluded from logs, analytics, and session replay, verified by inspection
+- [ ] `authorization_unknown` and transport failures resolved by reading
+
+## Non-conformances
+
+These are rejected at certification.
+
+| Constraint | Applies to |
+|---|---|
+| Fulfilling on the redirect instead of the transaction read | Web Checkout |
+| Treating a confirm timeout as a failed transaction | Direct API |
+| Generating a new idempotency key per HTTP retry | Both |
+| No reconciliation process | Both |
+| No unique constraint on the Cashd transaction identifier | Both |
+| Floating-point money values | Both |
+| Hardcoded code countdown | Direct API |
+| Logging, replaying, or capturing the one-time code | Direct API |
+| Fulfilling on a webhook payload | Both |
+| Resend control ignoring the per-number limit | Direct API |
+| Retrying a `422` | Both |
+| Branching on message text instead of `code` | Both |
+| Client-side storage or use of Cashd credentials | Both |

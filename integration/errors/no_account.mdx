@@ -1,0 +1,47 @@
+---
+title: "no_account"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `no_account` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> This phone number has no Cashd account.
+| Hint | Ask the customer to confirm their registered mobile number. |
+
+## Cause
+
+No Cashd consumer account exists for the mobile number supplied. The number may be mistyped, or the customer may not be registered with Cashd.
+
+## What to do
+
+1. Confirm the number with the customer, including the country code.
+2. Offer another payment method.
+3. Do not retry with the same number.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "no_account",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/no_account",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

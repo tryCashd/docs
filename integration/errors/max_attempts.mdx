@@ -1,0 +1,46 @@
+---
+title: "max_attempts"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `max_attempts` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Too many wrong codes — this charge has been locked.
+| Hint | Start over to send the customer a fresh code. |
+
+## Cause
+
+Three incorrect codes were submitted for this transaction. The transaction is terminal.
+
+## What to do
+
+1. Create a new transaction, which sends a fresh code.
+2. Respect the per-number limit of three codes every 15 minutes.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "max_attempts",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/max_attempts",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

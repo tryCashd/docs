@@ -1,0 +1,46 @@
+---
+title: "Transaction states"
+description: "The lifecycle and what each state means for fulfilment."
+---
+
+```
+   create ──► pending_otp ──── correct code ──► authorized ──► redeemed ──► settled
+                  │                                │              │
+                  │ 3 wrong codes / expiry         │ void         │ void
+                  ▼                                ▼              ▼
+             failed / expired                   reversed ◄────────┘
+```
+
+## States
+
+| State | Meaning | Fulfil? |
+|---|---|---|
+| `pending_otp` | Awaiting the customer's code | No |
+| `authorized` | Wallet debited, ledger entry written | **Yes** |
+| `redeemed` | Cleared, awaiting settlement | Yes, if not already |
+| `settled` | Included in a payout. Terminal, and no longer voidable through the API | Already fulfilled |
+| `reversed` | Voided; value returned to the customer | No — reverse any fulfilment |
+| `failed`, `expired` | Terminal. No value moved | No |
+
+## The fulfilment threshold
+
+`authorized` is the point at which money has moved and it is safe to release
+goods, services, or credit.
+
+Do not wait for `redeemed` in the payment path. Clearing happens asynchronously
+and blocking on it adds latency for no benefit.
+
+## Determining state
+
+| Option | Call |
+|---|---|
+| Web Checkout | [`GET /merchant/transactions/by_reference`](/integration/web-checkout/resolve-outcome) |
+| Direct API | `GET /merchant/transactions/:id` |
+
+A webhook is a prompt to make one of those calls, never a substitute for it. See
+[Webhooks](/integration/concepts/webhooks).
+
+## Recoverable and terminal
+
+Only `pending_otp` is recoverable — the customer can keep trying until attempts
+or time run out. Every other non-final state resolves on its own.

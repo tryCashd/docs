@@ -1,0 +1,40 @@
+---
+title: "Reconciliation"
+description: "Catching journeys that never came back."
+---
+
+A customer can be debited and never return to your application. Reconciliation is
+what turns those into fulfilled orders instead of lost ones.
+
+## The process
+
+Run a scheduled job, every few minutes:
+
+```
+for each order still awaiting, created more than ~2 minutes ago:
+    read by_reference
+    apply the branching in Resolve the outcome
+    if still pending well past session expiry:
+        mark not completed and raise it operationally
+```
+
+## Why the delay
+
+A short grace period avoids racing the customer who is still on the Cashd page.
+Two minutes is a reasonable starting point.
+
+## What to alert on
+
+| Signal | Meaning |
+|---|---|
+| Orders `awaiting` beyond session expiry plus a margin | Your reconciliation is not running or not converging. This number should be zero. |
+| Rising `pending` results on old references | Customers are abandoning the page, or the page is failing |
+
+## Test it before you launch
+
+Certification includes an interrupted-return test: the session is terminated
+immediately after a successful debit, and your reconciliation must complete the
+fulfilment with no redirect ever arriving.
+
+Build the reconciliation process before you build the return handler. The return
+handler is an optimisation; reconciliation is the guarantee.

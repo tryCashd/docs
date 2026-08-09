@@ -1,0 +1,45 @@
+---
+title: "no_balance"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `no_balance` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> There is no balance available for this program.
+
+## Cause
+
+The customer has a Cashd account but no redeemable value at this moment.
+
+## What to do
+
+1. Offer another payment method.
+2. The customer can add value in the Cashd app and start again.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "no_balance",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/no_balance",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

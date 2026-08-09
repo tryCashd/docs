@@ -1,0 +1,46 @@
+---
+title: "adapter_timeout"
+description: "HTTP 504 — upstream error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `adapter_timeout` |
+| HTTP status | `504` |
+| Class | Upstream |
+| Surface | Merchant API |
+| Safe to retry | Read first |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> The upstream service took too long to respond.
+| Hint | Try again in a moment. |
+
+## Cause
+
+An upstream call exceeded its time limit. The outcome of that call is not known to be a failure.
+
+## What to do
+
+1. Read the transaction with `GET /merchant/transactions/:id` before retrying.
+2. Do not assume the charge failed.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "adapter_timeout",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/adapter_timeout",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

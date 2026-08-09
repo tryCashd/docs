@@ -1,37 +1,171 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Cashd",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#143fdb",
+    "light": "#4c7bff",
+    "dark": "#053060"
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Merchants",
+        "groups": [
+          {
+            "group": "Welcome",
+            "pages": [
+              "index"
+            ]
+          },
+          {
+            "group": "Accepting Cashd",
+            "pages": [
+              "merchants/overview",
+              "merchants/eligibility",
+              "merchants/commercial-terms"
+            ]
+          },
+          {
+            "group": "Getting set up",
+            "pages": [
+              "merchants/account-setup",
+              "merchants/portal-first-login",
+              "merchants/team-and-roles",
+              "merchants/outlets"
+            ]
+          },
+          {
+            "group": "Running day to day",
+            "pages": [
+              "merchants/daily-operations",
+              "merchants/voids-and-disputes",
+              "merchants/settlements-and-reporting"
+            ]
+          },
+          {
+            "group": "Next steps",
+            "pages": [
+              "merchants/choosing-an-integration",
+              "merchants/support"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Providers",
+        "groups": [
+          {
+            "group": "Becoming a provider",
+            "pages": [
+              "providers/overview",
+              "providers/how-it-works",
+              "providers/requirements",
+              "providers/ecommerce-stores",
+              "providers/get-in-touch"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integration",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "integration/overview",
+              "integration/get-started/environments",
+              "integration/get-started/authentication",
+              "integration/get-started/conventions"
+            ]
+          },
+          {
+            "group": "Web Checkout",
+            "pages": [
+              "integration/web-checkout/overview",
+              "integration/web-checkout/create-session",
+              "integration/web-checkout/return-handling",
+              "integration/web-checkout/resolve-outcome",
+              "integration/web-checkout/open-amount",
+              "integration/web-checkout/reconciliation"
+            ]
+          },
+          {
+            "group": "Direct API",
+            "pages": [
+              "integration/direct-api/overview",
+              "integration/direct-api/availability",
+              "integration/direct-api/create-and-confirm",
+              "integration/direct-api/otp-requirements",
+              "integration/direct-api/reconciliation"
+            ]
+          },
+          {
+            "group": "Concepts",
+            "pages": [
+              "integration/concepts/idempotency",
+              "integration/concepts/transaction-states",
+              "integration/concepts/voids",
+              "integration/concepts/webhooks",
+              "integration/concepts/settlement-reconciliation"
+            ]
+          },
+          {
+            "group": "Errors",
+            "pages": [
+              "integration/errors/overview",
+              "integration/errors/no_account",
+              "integration/errors/no_balance",
+              "integration/errors/insufficient_balance",
+              "integration/errors/account_locked",
+              "integration/errors/max_attempts",
+              "integration/errors/merchant_inactive",
+              "integration/errors/void_window_expired",
+              "integration/errors/invalid_otp",
+              "integration/errors/checkout_unavailable",
+              "integration/errors/amount_unavailable",
+              "integration/errors/checkout_verification_required",
+              "integration/errors/checkout_session_expired",
+              "integration/errors/insufficient_pool",
+              "integration/errors/issuer_unhealthy",
+              "integration/errors/issuer_error",
+              "integration/errors/adapter_timeout",
+              "integration/errors/authorization_unknown",
+              "integration/errors/rate_limited",
+              "integration/errors/unauthorized",
+              "integration/errors/forbidden",
+              "integration/errors/idempotency_conflict",
+              "integration/errors/idempotency_key_required",
+              "integration/errors/idempotency_key_too_long",
+              "integration/errors/not_found",
+              "integration/errors/bad_request",
+              "integration/errors/validation_failed",
+              "integration/errors/pairing_code_invalid",
+              "integration/errors/reviewer_account_forbidden",
+              "integration/errors/overlay_token_expired",
+              "integration/errors/overlay_already_responded",
+              "integration/errors/reset_code_invalid",
+              "integration/errors/reset_code_expired",
+              "integration/errors/reset_code_max_attempts",
+              "integration/errors/weak_password"
+            ]
+          },
+          {
+            "group": "Launch",
+            "pages": [
+              "integration/go-live"
+            ]
+          },
+          {
+            "group": "Changes",
+            "pages": [
+              "changelog"
+            ]
+          }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -41,13 +175,13 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:integrations@trycashd.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "label": "Merchant portal",
+      "href": "https://merchant.trycashd.com"
     }
   },
   "contextual": {
@@ -56,17 +190,24 @@
       "view",
       "chatgpt",
       "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+      "mcp"
     ]
   },
   "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    "links": [
+      {
+        "header": "Cashd",
+        "items": [
+          {
+            "label": "Integration support",
+            "href": "mailto:integrations@trycashd.com"
+          },
+          {
+            "label": "Operations",
+            "href": "mailto:ops@trycashd.com"
+          }
+        ]
+      }
+    ]
   }
 }

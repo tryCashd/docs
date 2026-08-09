@@ -1,0 +1,44 @@
+---
+title: "idempotency_key_required"
+description: "HTTP 400 — validation error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `idempotency_key_required` |
+| HTTP status | `400` |
+| Class | Validation |
+| Surface | Merchant API |
+| Safe to retry | Yes, with the header |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> X-Idempotency-Key header is required on this endpoint.
+
+## Cause
+
+The endpoint requires an idempotency key and none was supplied.
+
+## What to do
+
+1. Add the `X-Idempotency-Key` header, keyed to your payment intent.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "idempotency_key_required",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/idempotency_key_required",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).
