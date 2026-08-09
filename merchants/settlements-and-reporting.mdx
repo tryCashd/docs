@@ -10,7 +10,7 @@ description: "Reading a payout and reconciling it."
 | Gross | Total authorised transaction value in the period |
 | Merchant discount | Deducted per your rate card |
 | VAT | VAT on the discount portion |
-| Net | Amount paid to your settlement IBAN |
+| Net | Amount paid to you |
 | Period | The date range the payout covers |
 | Transaction count | Number of transactions aggregated |
 
@@ -22,7 +22,7 @@ net = gross − merchant discount − VAT on the discount
 
 <Steps>
   <Step title="Match the net to the credit received">
-    The net figure is the amount paid to your settlement IBAN.
+    The net figure is the amount Cashd pays you for the period.
   </Step>
   <Step title="Match the period">
     Read the covered period from the payout record. Do not assume a fixed
