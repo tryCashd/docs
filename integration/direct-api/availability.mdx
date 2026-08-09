@@ -3,8 +3,8 @@ title: "Availability"
 description: "POST /merchant/availability"
 ---
 
-Evaluates whether a customer can cover an amount. Nothing changes, no code is
-sent, nothing is charged. Use it to decide whether to offer Cashd.
+Evaluates whether a customer's Cashd balance covers an amount. Nothing changes,
+no code is sent, nothing is charged. Use it to decide whether to offer Cashd.
 
 ```http
 POST {base}/api/v1/merchant/availability
@@ -32,7 +32,7 @@ Content-Type: application/json
 |---|---|---|
 | `available_full` | The full amount is coverable | Proceed with the requested amount |
 | `available_partial` | Part is coverable | Apply your partial-coverage policy below |
-| `unavailable` | Nothing to redeem | Do not offer Cashd. Show the message for the returned `reason` |
+| `unavailable` | No spendable balance | Do not offer Cashd. Show the message for the returned `reason` |
 
 When `status` is `unavailable`, `reason` is one of `no_account`, `no_balance`,
 `account_locked`, or `issuer_unhealthy`.
@@ -62,6 +62,14 @@ subsequent create is a normal outcome, not an exception — handle it in the flo
 
 ## What is not returned
 
-No balance figure, no programme names, no indication of how many loyalty
-programmes fund the wallet. You learn only whether the amount you asked about is
+No balance figure, no programme names, no indication of how the customer's
+balance was funded. You learn only whether the amount you asked about is
 coverable.
+
+## Limits that can make an amount unavailable
+
+A customer's spending is subject to limits set by Cashd, including a per-consumer
+daily cap. An amount within the customer's balance can still be unavailable
+because of them. Treat `unavailable` and
+[`insufficient_balance`](/integration/errors/insufficient_balance) as ordinary
+outcomes and offer another tender.

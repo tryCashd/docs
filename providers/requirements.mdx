@@ -8,37 +8,53 @@ description: "What a programme needs before joining."
 | Requirement | Detail |
 |---|---|
 | Legal entity | A registered entity able to enter a provider agreement in Saudi Arabia |
-| Redemption authority | The right to permit third-party redemption of your points under your programme terms |
-| Commercial terms | An agreed value for redeemed points and a settlement cycle |
+| Redemption authority | The right to permit conversion of your points under your programme terms |
+| Commercial terms | An agreed conversion rate and settlement cycle |
 | Contacts | A commercial owner and an operational escalation contact |
 
 ## Technical
 
-Your programme must expose a service interface that Cashd can call to verify a
-member, evaluate available value, deduct value, and reverse a deduction.
+Your programme exposes a service interface Cashd calls on the conversion path
+only.
 
 | Area | Expectation |
 |---|---|
+| Balance retrieval | Return a member's redeemable balance |
+| **Atomic lock and redeem** | Burn a stated amount in a single operation that cannot partially apply. This is the one hard requirement |
+| Health | Report whether the programme can serve conversions |
 | Transport | HTTPS with TLS 1.2 or later |
 | Authentication | Mutual TLS, or credentials issued to Cashd, as agreed |
-| Availability | An agreed service level, monitored by both parties |
-| Idempotency | A repeated deduction request with the same reference must not deduct twice |
+| Idempotency | A repeated redeem request carrying the same reference must not burn twice |
 | Declines | Distinguishable decline responses, so Cashd can tell a member to retry rather than fail permanently |
-| Reversal | Support for reversing a completed deduction within the agreed window |
+| Availability | An agreed service level, monitored by both parties |
 
-Exact endpoints, payloads, and thresholds are specified jointly during
-onboarding. Cashd builds and maintains the adapter to your interface.
+<Warning>
+Atomicity on lock and redeem is the requirement most likely to need work on your
+side. A two-step burn that can succeed partway leaves a member's points consumed
+with no SAR credited. If your platform cannot do it natively, raise it in
+discovery — it shapes the integration.
+</Warning>
+
+Cashd builds and maintains the adapter to your interface. You do not build
+against Cashd.
+
+## Reversal
+
+Cashd does not reinstate burned points. If your programme can reverse a burn
+after the fact, say so in discovery — it affects how soon converted SAR becomes
+spendable.
 
 ## Regulatory and data
 
 | Requirement | Detail |
 |---|---|
-| Member consent | Your programme terms must permit a member to link and redeem through Cashd |
-| Personal data | Cashd passes the minimum required to identify a member. Nothing else is shared in either direction |
+| Member consent | Your programme terms must permit a member to link and convert through Cashd |
+| Personal data | Cashd passes the minimum needed to identify a member. Nothing else is shared in either direction |
 | Retention | Each party retains only what its own obligations require |
+| Isolation | Your data is never exposed to merchants or to other providers |
 
 ## Certification
 
-Before going live, both parties run an agreed test set covering linking,
-availability, deduction, decline paths, reversal, and timeout behaviour. Cashd
-provides the test plan.
+Before going live, both parties run an agreed test set covering linking, balance
+retrieval, conversion, decline paths, idempotent retries, and timeout behaviour.
+Cashd provides the test plan.

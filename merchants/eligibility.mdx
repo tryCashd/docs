@@ -8,25 +8,37 @@ description: "Who can accept Cashd and what is required."
 | Requirement | Detail |
 |---|---|
 | Legal entity | Registered in Saudi Arabia, with a valid commercial registration |
-| Bank account | A Saudi IBAN in the registered entity's name, used for settlement |
+| Settlement IBAN | A Saudi IBAN in the registered entity's name, recorded on your merchant account and used for payouts |
 | Payment point | A step where the customer is present and can receive an SMS — in store, in app, on your website, or by phone |
 | Contacts | A named technical contact and a named operational contact |
 
 ## Categories
 
-Cashd classifies merchants by category. Your category is set during account
-setup and affects nothing you control directly.
+Cashd classifies merchants by category. Your category is set during account setup.
 
-Supported categories include grocery, delivery, pharmacy, fuel, and general
-retail. If your business does not fit an existing category, Cashd assigns the
-general category.
+Supported categories include food and beverage, retail, health and beauty,
+grocery, delivery, fuel, and entertainment. If your business does not fit an
+existing category, Cashd assigns a general category.
+
+Category affects rate-card treatment. It does not change how the integration
+behaves.
+
+## Route
+
+| Your business | Route |
+|---|---|
+| Delivery platform or marketplace with its own checkout | Merchant API, embedded in your own payment flow |
+| Retail, food and beverage, or services with staff at a counter | Merchant portal, or the Merchant API |
+| Online store | Cashd-hosted checkout page |
+
+See [Choosing an integration](/merchants/choosing-an-integration).
 
 ## What does not qualify
 
 - Businesses without a Saudi commercial registration.
 - Businesses that cannot present the payment step to a customer who is present,
   physically or digitally.
-- Any use where Cashd value would become withdrawable cash. See
+- Any arrangement where Cashd value would become withdrawable cash. See
   [stored value](/merchants/commercial-terms#stored-value-and-store-credit).
 
 ## Multiple locations

@@ -7,6 +7,15 @@ Cashd provides two integration options against the Merchant API v1. Both use the
 same credentials, settlement stream, and reporting. The difference is who hosts
 the payment step.
 
+## What you are charging
+
+The consumer holds a SAR balance in Cashd, funded in advance by converting
+loyalty points. Your transaction debits that SAR balance.
+
+No loyalty programme is contacted when you charge. The points were burned
+earlier, when the consumer topped up. A payment therefore does not depend on any
+external programme being reachable, and the amount you charge is plain SAR.
+
 <CardGroup cols={2}>
   <Card title="Web Checkout" icon="browser" href="/integration/web-checkout/overview">
     Cashd hosts the payment page. You create a session, send the customer there,

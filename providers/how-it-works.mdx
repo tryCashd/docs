@@ -1,63 +1,70 @@
 ---
 title: "How it works"
-description: "Linking, redemption, and reversal."
+description: "Linking, conversion, and settlement."
 ---
 
 ## Linking
 
-A member links your programme once, inside the Cashd app. Cashd verifies that
-the member controls the account they are linking, using the method agreed with
-you. After linking, the member's Cashd wallet reflects value backed by your
-points.
-
-Two linking models are supported. Which one applies to your programme is agreed
-during onboarding.
+A member links your programme once, inside the Cashd app. How that link is
+established is agreed with you.
 
 | Model | Member experience |
 |---|---|
 | Explicit | The member authenticates against your programme as part of linking |
-| Implicit | The link is established from identity Cashd has already verified, with no separate step |
+| Implicit | The link is derived from identity Cashd has already verified, with no separate step |
+| Inert | No linking step; the programme is present without a member-initiated link |
 
-## Redemption
+## Conversion
 
-When a member pays at a Cashd merchant:
+Conversion is the only moment your systems are involved.
 
 <Steps>
-  <Step title="Cashd evaluates availability">
-    Cashd asks your system what the member can redeem. Nothing is charged and no
-    points move.
+  <Step title="The member sees what is available">
+    Cashd asks your programme for the member's redeemable balance.
   </Step>
-  <Step title="The member authorises">
-    The member confirms the payment in the Cashd flow.
+  <Step title="The member chooses an amount">
+    In the Cashd app, in your programme's units.
   </Step>
-  <Step title="Cashd requests the redemption">
-    Your system deducts the points and confirms. Cashd credits the merchant leg
-    in SAR.
+  <Step title="Your programme burns the points">
+    Cashd calls your programme to lock and redeem the points in a single atomic
+    operation. Your programme is the authority on whether it is permitted.
+  </Step>
+  <Step title="Cashd credits SAR">
+    On your confirmation, Cashd credits the member a SAR balance at the
+    contracted rate.
   </Step>
 </Steps>
 
-Your system is the authority on the member's balance and on whether a redemption
-is permitted. Cashd does not hold or shadow your point balances.
+## Spend
 
-## Reversal
+The member spends the SAR balance at any Cashd merchant, at any later time. Your
+programme is not contacted, is not a dependency, and receives no notification.
 
-A transaction may be reversed within a defined window — for example a voided
-purchase at the merchant. Cashd requests the reversal from your system and the
-points return to the member.
+If a merchant later voids a transaction, the SAR returns to the member's Cashd
+balance. Points are not reinstated — they were burned at conversion, and the
+member still holds their value in SAR.
 
 ## Settlement
 
-Redeemed value is settled between Cashd and your programme on the cycle set in
-your provider agreement.
+| Item | Detail |
+|---|---|
+| What is settled | Points burned through conversions in the period |
+| Rate | The contracted rate in your provider agreement, which may vary by merchant category |
+| Cycle | As agreed in your provider agreement |
+| Source of truth | Completed conversions, reconcilable to your own burn records |
 
-## What Cashd needs from your side
+Your obligation accrues at conversion, not at spend. A converted point is settled
+whether or not the member has spent the SAR yet.
 
-At a high level, your systems must be able to answer four questions:
+## What Cashd needs from your systems
 
-1. Does this member exist, and do they control this account?
-2. How much can this member redeem right now?
-3. Deduct this amount — confirmed or declined.
-4. Reverse this deduction.
+Three operations, called only on the conversion path:
 
-The exact interfaces, formats, and service levels are defined together during
-onboarding. See [Requirements](/providers/requirements).
+| Operation | Purpose |
+|---|---|
+| Balance | What can this member redeem right now? |
+| Lock and redeem | Burn this amount, atomically. Confirmed or declined |
+| Health | Is the programme available to serve conversions? |
+
+Exact interfaces are specified together. See
+[Requirements](/providers/requirements).

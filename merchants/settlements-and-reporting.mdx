@@ -1,33 +1,40 @@
 ---
 title: "Settlements and reporting"
-description: "Reading a payout and reconciling it to your bank."
+description: "Reading a payout and reconciling it."
 ---
 
 ## What a payout contains
 
 | Figure | Meaning |
 |---|---|
-| Gross | Total transaction value in the period |
-| Discount | Merchant discount deducted |
+| Gross | Total authorised transaction value in the period |
+| Merchant discount | Deducted per your rate card |
 | VAT | VAT on the discount portion |
-| Net | Amount wired to your IBAN |
+| Net | Amount paid to your settlement IBAN |
 | Period | The date range the payout covers |
 | Transaction count | Number of transactions aggregated |
 
-Net equals gross minus discount minus VAT.
+```
+net = gross − merchant discount − VAT on the discount
+```
 
 ## Reconciling
 
 <Steps>
-  <Step title="Match the net to the bank credit">
-    The net figure is what arrives in your account.
+  <Step title="Match the net to the credit received">
+    The net figure is the amount paid to your settlement IBAN.
   </Step>
-  <Step title="Match line items to your own records">
-    Compare the transactions in the payout against the transactions you recorded
-    as authorised or cleared in the same period.
+  <Step title="Match the period">
+    Read the covered period from the payout record. Do not assume a fixed
+    cadence — the cycle is set in your merchant agreement.
+  </Step>
+  <Step title="Match line items">
+    Compare the transactions in the payout against those you recorded as
+    authorised or cleared in the same period.
   </Step>
   <Step title="Raise anything unexplained">
-    Within 30 calendar days. See [Voids and disputes](/merchants/voids-and-disputes).
+    Within 30 calendar days. See
+    [Voids and disputes](/merchants/voids-and-disputes).
   </Step>
 </Steps>
 
@@ -38,7 +45,10 @@ Net equals gross minus discount minus VAT.
 | Merchant portal | Day-to-day review |
 | `GET /merchant/settlements` | Automated reconciliation. See [Settlement and reconciliation](/integration/concepts/settlement-reconciliation) |
 
-## Timing
+## Common causes of a mismatch
 
-The settlement cycle and payout timing are set in your merchant agreement. Read
-the covered period from each payout record rather than assuming a fixed schedule.
+| Symptom | Likely cause |
+|---|---|
+| Your total exceeds the payout | Transactions voided after you fulfilled, or transactions that never reached a cleared state |
+| The payout lists transactions you do not recognise | Your reconciliation is not recording outcomes. Check for orders stuck in a non-final state |
+| Net lower than expected | Merchant discount and VAT. Compare against gross, not net |

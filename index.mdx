@@ -3,10 +3,9 @@ title: "Cashd documentation"
 description: "Accept Cashd, become a provider, or integrate the Merchant API."
 ---
 
-Cashd converts loyalty points into SAR that consumers spend with participating
-merchants. Consumers link their loyalty programmes into a Cashd wallet.
-Merchants charge that wallet in SAR and are settled in SAR. Providers supply the
-points that fund it.
+Consumers convert loyalty points into a SAR balance held in Cashd. They spend
+that balance with participating merchants. Providers are the loyalty programmes
+those points come from.
 
 ## Start here
 
@@ -16,24 +15,43 @@ points that fund it.
     use, settlements.
   </Card>
   <Card title="Providers" icon="gift" href="/providers/overview">
-    Make your loyalty programme spendable at Cashd merchants.
+    Let your members convert their points into SAR they can spend.
   </Card>
   <Card title="Integration" icon="code" href="/integration/overview">
-    Build against the Merchant API. Two options, full reference, error codes.
+    Build against the Merchant API. Two options, error codes, go-live checklist.
   </Card>
 </CardGroup>
 
-## What Cashd does
+## How the money moves
+
+Two separate events, at different times.
+
+```
+TOP-UP (in advance, in the Cashd app)
+  Consumer converts points ──► points are burned at the provider
+                          ──► Cashd credits a SAR balance
+
+SPEND (later, at your payment step)
+  Consumer spends the SAR balance ──► you are authorised
+                                  ──► Cashd settles SAR to you
+```
+
+<Note>
+No loyalty programme is contacted when a payment happens. By then the points are
+already burned and the consumer holds SAR. This is why a Cashd payment does not
+depend on a provider being reachable.
+</Note>
+
+## Each party
 
 | Party | Gives | Receives |
 |---|---|---|
-| Consumer | Loyalty points from linked programmes | SAR spending power at any Cashd merchant |
+| Consumer | Loyalty points, at top-up | SAR spendable at any Cashd merchant |
 | Merchant | Goods or services | SAR settlement, net of the merchant discount |
-| Provider | Points redeemable through Cashd | Settlement of redeemed value, and engagement on otherwise dormant points |
+| Provider | Points burned at top-up | Release of the outstanding points liability, and engagement on otherwise dormant balances |
 
-Cashd sits between the parties. A merchant never learns which programme funded a
-transaction, or what a consumer holds. A provider never learns where a consumer
-spends.
+A merchant never learns which programme a consumer's balance came from. A
+provider never learns where a consumer spends.
 
 ## Key facts
 

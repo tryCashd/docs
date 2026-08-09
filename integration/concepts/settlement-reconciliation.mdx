@@ -21,18 +21,20 @@ GET {base}/api/v1/merchant/settlements
 Authorization: Bearer tc_live_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Each payout record states gross, discount, VAT, net, the transaction count, and
-the period covered.
+Each payout record states gross, merchant discount, VAT, net, the transaction
+count, and the period covered.
 
 ```
-net = gross − discount − VAT
+net = gross − merchant discount − VAT on the discount
 ```
+
+Payment is made to the settlement IBAN recorded on your merchant account.
 
 ## Reconciling a payout
 
 <Steps>
-  <Step title="Match net to the bank credit">
-    The net figure is what arrives in your account.
+  <Step title="Match net to the credit received">
+    The net figure is the amount paid to your settlement IBAN.
   </Step>
   <Step title="Match the period">
     Read the covered period from the payout record. Do not assume a fixed
@@ -53,4 +55,4 @@ net = gross − discount − VAT
 |---|---|
 | Your total exceeds the payout | Transactions voided after you fulfilled, or transactions that never reached `redeemed` |
 | The payout contains transactions you do not recognise | Your reconciliation is not recording outcomes — check for orders stuck in a non-final state |
-| Net is lower than expected | Discount and VAT. Compare against gross, not net |
+| Net is lower than expected | Merchant discount and VAT. Compare against gross, not net |

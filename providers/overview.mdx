@@ -1,41 +1,54 @@
 ---
 title: "Overview"
-description: "Make your loyalty programme spendable at Cashd merchants."
+description: "Let your members convert their points into SAR they can spend."
 ---
 
-A provider is a loyalty programme whose points fund Cashd wallets. Your members
-link your programme in the Cashd app, and the points they hold become SAR they
-can spend at any Cashd merchant.
+A provider is a loyalty programme whose points members can convert into SAR
+through Cashd. Your members link your programme in the Cashd app, convert points
+when they choose to, and spend the resulting SAR balance at any Cashd merchant.
 
-## What joining changes for your programme
+## What joining changes
 
 | Outcome | Detail |
 |---|---|
-| Redemption breadth | Your points become spendable across the whole Cashd merchant network, without you signing any of those merchants |
-| Engagement on dormant points | Points that would otherwise sit unused acquire a use your members already want |
-| No merchant integration work | Cashd holds the merchant relationships, the payment rails, and the settlement |
-| No consumer app to build | Members redeem in the Cashd app. You do not build or maintain a redemption interface |
+| A high-frequency redemption channel | Members redeem into everyday spending rather than a fixed catalogue |
+| Liability release | Outstanding points are a balance-sheet liability until redeemed. Conversion through Cashd releases it through ordinary member activity |
+| Redemption breadth without merchant deals | Your points reach the whole Cashd merchant network without you signing any of those merchants |
+| No consumer interface to build | Members convert in the Cashd app. You do not build or maintain a redemption interface |
+| Engagement on dormant balances | Members with balances they never intended to use acquire a reason to return |
 
-## What Cashd handles
+## Where you sit in the flow
 
-- The consumer relationship at redemption: identity, authentication, and the
-  redemption interface.
-- The merchant network, payment acceptance, and merchant settlement.
-- Selecting which linked programme funds a given transaction.
+Points are burned once, at conversion. Nothing is asked of your systems when the
+member later spends.
 
-## What stays with you
+```
+CONVERSION (in the Cashd app)
+  Member chooses an amount ──► Cashd calls your programme
+                          ──► points are burned
+                          ──► Cashd credits the member a SAR balance
 
-- Your points, your earn rules, your programme terms.
-- The system of record for member balances.
-- The decision to approve or decline any individual redemption.
+SPEND (later, at any Cashd merchant)
+  Member spends SAR ──► your programme is not involved
+```
 
-## Data boundaries
+<Note>
+Your systems are called at conversion only. Merchant payments do not reach you,
+do not depend on your availability, and are not visible to you.
+</Note>
+
+## What each party sees
 
 | Party | Does not learn |
 |---|---|
-| Merchants | Which programme funded a transaction, or that your programme exists on that wallet |
 | You | Where a member spends, or which merchant was paid |
+| Merchants | Which programme funded a balance, or that your programme is linked at all |
+
+## What stays yours
+
+Your points, your earn rules, your programme terms, and the member balances you
+hold. Cashd does not shadow or hold your point balances.
 
 <Card title="How it works" icon="arrow-right" href="/providers/how-it-works">
-  The redemption flow end to end.
+  Linking, conversion, and settlement.
 </Card>
