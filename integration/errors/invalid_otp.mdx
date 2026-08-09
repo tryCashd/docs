@@ -1,0 +1,47 @@
+---
+title: "invalid_otp"
+description: "HTTP 401 — authentication error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `invalid_otp` |
+| HTTP status | `401` |
+| Class | Authentication |
+| Surface | Merchant API |
+| Safe to retry | Yes, with a corrected code |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Wrong verification code.
+| Hint | Ask the customer to read the code again, then re-enter it. |
+
+## Cause
+
+The code submitted does not match. Attempts remain on this transaction.
+
+## What to do
+
+1. Prompt the customer to re-enter the code.
+2. Show the number of attempts remaining.
+3. After three failures the transaction returns `max_attempts` and is terminal.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "invalid_otp",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/invalid_otp",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

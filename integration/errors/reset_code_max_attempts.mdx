@@ -1,0 +1,44 @@
+---
+title: "reset_code_max_attempts"
+description: "HTTP 422 — authentication error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `reset_code_max_attempts` |
+| HTTP status | `422` |
+| Class | Authentication |
+| Surface | Portal and app |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Too many incorrect attempts. Request a new code.
+
+## Cause
+
+Too many incorrect password-reset codes were submitted.
+
+## What to do
+
+1. Request a new code.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "reset_code_max_attempts",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/reset_code_max_attempts",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

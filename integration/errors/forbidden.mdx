@@ -1,0 +1,45 @@
+---
+title: "forbidden"
+description: "HTTP 403 — authentication error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `forbidden` |
+| HTTP status | `403` |
+| Class | Authentication |
+| Surface | All surfaces |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> You are not authorized to perform this action.
+
+## Cause
+
+The credential is valid but not permitted for this action or this resource.
+
+## What to do
+
+1. Confirm the resource belongs to your merchant account.
+2. Confirm the role of the signed-in portal user.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "forbidden",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/forbidden",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

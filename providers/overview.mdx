@@ -1,0 +1,41 @@
+---
+title: "Overview"
+description: "Make your loyalty programme spendable at Cashd merchants."
+---
+
+A provider is a loyalty programme whose points fund Cashd wallets. Your members
+link your programme in the Cashd app, and the points they hold become SAR they
+can spend at any Cashd merchant.
+
+## What joining changes for your programme
+
+| Outcome | Detail |
+|---|---|
+| Redemption breadth | Your points become spendable across the whole Cashd merchant network, without you signing any of those merchants |
+| Engagement on dormant points | Points that would otherwise sit unused acquire a use your members already want |
+| No merchant integration work | Cashd holds the merchant relationships, the payment rails, and the settlement |
+| No consumer app to build | Members redeem in the Cashd app. You do not build or maintain a redemption interface |
+
+## What Cashd handles
+
+- The consumer relationship at redemption: identity, authentication, and the
+  redemption interface.
+- The merchant network, payment acceptance, and merchant settlement.
+- Selecting which linked programme funds a given transaction.
+
+## What stays with you
+
+- Your points, your earn rules, your programme terms.
+- The system of record for member balances.
+- The decision to approve or decline any individual redemption.
+
+## Data boundaries
+
+| Party | Does not learn |
+|---|---|
+| Merchants | Which programme funded a transaction, or that your programme exists on that wallet |
+| You | Where a member spends, or which merchant was paid |
+
+<Card title="How it works" icon="arrow-right" href="/providers/how-it-works">
+  The redemption flow end to end.
+</Card>

@@ -1,0 +1,44 @@
+---
+title: "reviewer_account_forbidden"
+description: "HTTP 403 — authentication error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `reviewer_account_forbidden` |
+| HTTP status | `403` |
+| Class | Authentication |
+| Surface | Consumer app |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> This action is not available for the reviewer demo account.
+
+## Cause
+
+The action was attempted on an app-store reviewer demo account, which cannot perform real money movement. Not reachable by a partner integration.
+
+## What to do
+
+1. No partner action.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "reviewer_account_forbidden",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/reviewer_account_forbidden",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

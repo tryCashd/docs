@@ -1,0 +1,78 @@
+---
+title: "Voids"
+description: "POST /merchant/transactions/:id/void"
+---
+
+A void reverses a transaction and returns the value to the customer's Cashd
+wallet.
+
+```http
+POST {base}/api/v1/merchant/transactions/txn_0f8c2d1e-4a7b-4c3f-9e21-6b5a8c7d0e11/void
+Authorization: Bearer tc_live_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Content-Type: application/json
+
+{ "void_reason": "wrong_amount" }
+```
+
+```http
+200 OK
+
+{
+  "public_id": "txn_0f8c2d1e-4a7b-4c3f-9e21-6b5a8c7d0e11",
+  "status": "reversed",
+  "amount_halalas": 12500,
+  "consumer_phone_masked": "+9665•••••567",
+  "void_reason": "wrong_amount",
+  "created_at": "2026-08-09T21:02:11Z",
+  "expires_at": null
+}
+```
+
+## What can be voided
+
+| Voidable | Not voidable |
+|---|---|
+| `pending_otp` | `settled` |
+| `authorized` | `failed` |
+| `redeemed` | `expired` |
+| | `reversed` |
+
+A non-voidable state returns
+[`validation_failed`](/integration/errors/validation_failed).
+
+## Void window
+
+Cashd enforces a window measured from transaction creation. Its length is
+configured by Cashd and stated at onboarding. A request outside it returns
+[`void_window_expired`](/integration/errors/void_window_expired).
+
+Once a transaction is settled it cannot be voided through the API at all. Contact
+`ops@trycashd.com`.
+
+## Reasons
+
+`void_reason` is optional when calling with an API key and required for portal
+users. Permitted values:
+
+| Value |
+|---|
+| `wrong_amount` |
+| `customer_request` |
+| `duplicate_charge` |
+| `other` |
+
+`GET /merchant/void_reasons` returns the list with Arabic and English labels, so
+you can render a dropdown without hardcoding copy.
+
+## Effects
+
+| Transaction state | Effect of the void |
+|---|---|
+| `redeemed` | Value returns to the customer's Cashd wallet |
+| `pending_otp`, `authorized` | The session or authorisation is terminated |
+
+<Warning>
+A void reverses the Cashd side only. If you have already released goods,
+delivered a service, or credited store credit, recovering that is your own
+process. Cashd does not recover value on your behalf.
+</Warning>

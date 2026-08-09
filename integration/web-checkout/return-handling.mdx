@@ -1,0 +1,53 @@
+---
+title: "Return handling"
+description: "Bringing the customer back to your application."
+---
+
+## Web
+
+Open `checkout_url` in the browser and let Cashd redirect back to your success,
+failure, or cancel URL.
+
+## Mobile applications
+
+Open `checkout_url` in an in-app webview or the system browser, and register an
+**HTTPS universal link or app link on a domain you control** as the return URL.
+That link opens your app.
+
+<Warning>
+Do not use a custom URL scheme such as `yourapp://return` as the return URL.
+Custom schemes are unreliable across OS versions and in-app browsers.
+</Warning>
+
+## The redirect proves nothing
+
+The redirect is a browser event. It can be lost:
+
+- The customer backgrounds or force-quits the app.
+- The webview is dismissed.
+- The network drops between the debit and the redirect.
+
+The wallet debit has already happened server-side in each of those cases.
+
+<Warning>
+Never fulfil, ship, or credit on the redirect alone. Always read the transaction
+first. See [Resolve the outcome](/integration/web-checkout/resolve-outcome).
+</Warning>
+
+## What to do on return
+
+<Steps>
+  <Step title="Show an interim state">
+    Display a neutral "confirming your payment" state. Do not tell the customer
+    it succeeded or failed yet.
+  </Step>
+  <Step title="Read the transaction">
+    Call `by_reference` and act on the response.
+  </Step>
+  <Step title="Show the outcome">
+    Only after the read returns.
+  </Step>
+</Steps>
+
+Treat the cancel URL the same way. A customer who lands on cancel may still have
+completed a debit in another tab or a race. The read is the authority.

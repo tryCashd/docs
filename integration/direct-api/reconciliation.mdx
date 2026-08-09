@@ -1,0 +1,45 @@
+---
+title: "Reconciliation"
+description: "Resolving transactions whose outcome you never received."
+---
+
+Direct API has no redirect to lose, but it has the same hazard: a confirm
+response that never reaches you while the debit succeeded.
+
+## The process
+
+Run a scheduled job:
+
+```
+for each transaction you hold in a non-final state:
+    read GET /merchant/transactions/:id
+    apply the state table
+    fulfil, or mark terminal
+```
+
+## States
+
+| `status` | Action |
+|---|---|
+| `authorized`, `redeemed` | Fulfil if not already fulfilled |
+| `pending_otp` | Still in progress. Leave it; it will expire or fail |
+| `failed`, `expired` | Terminal. No money moved |
+| `reversed` | Reverse any fulfilment |
+
+## Fulfil exactly once
+
+Your confirm handler and your reconciliation job can act on the same transaction
+concurrently. Put a unique constraint on the Cashd transaction identifier in the
+table where you record fulfilment.
+
+```sql
+CREATE UNIQUE INDEX idx_fulfilment_cashd_txn
+  ON fulfilments (cashd_transaction_id);
+```
+
+## What to alert on
+
+| Signal | Meaning |
+|---|---|
+| Transactions in a non-final state beyond the code validity plus a margin | Reconciliation is not running or not converging |
+| Rising `authorization_unknown` rate | An upstream problem. Reads still resolve it, but raise it with Cashd |

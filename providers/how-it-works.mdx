@@ -1,0 +1,63 @@
+---
+title: "How it works"
+description: "Linking, redemption, and reversal."
+---
+
+## Linking
+
+A member links your programme once, inside the Cashd app. Cashd verifies that
+the member controls the account they are linking, using the method agreed with
+you. After linking, the member's Cashd wallet reflects value backed by your
+points.
+
+Two linking models are supported. Which one applies to your programme is agreed
+during onboarding.
+
+| Model | Member experience |
+|---|---|
+| Explicit | The member authenticates against your programme as part of linking |
+| Implicit | The link is established from identity Cashd has already verified, with no separate step |
+
+## Redemption
+
+When a member pays at a Cashd merchant:
+
+<Steps>
+  <Step title="Cashd evaluates availability">
+    Cashd asks your system what the member can redeem. Nothing is charged and no
+    points move.
+  </Step>
+  <Step title="The member authorises">
+    The member confirms the payment in the Cashd flow.
+  </Step>
+  <Step title="Cashd requests the redemption">
+    Your system deducts the points and confirms. Cashd credits the merchant leg
+    in SAR.
+  </Step>
+</Steps>
+
+Your system is the authority on the member's balance and on whether a redemption
+is permitted. Cashd does not hold or shadow your point balances.
+
+## Reversal
+
+A transaction may be reversed within a defined window — for example a voided
+purchase at the merchant. Cashd requests the reversal from your system and the
+points return to the member.
+
+## Settlement
+
+Redeemed value is settled between Cashd and your programme on the cycle set in
+your provider agreement.
+
+## What Cashd needs from your side
+
+At a high level, your systems must be able to answer four questions:
+
+1. Does this member exist, and do they control this account?
+2. How much can this member redeem right now?
+3. Deduct this amount — confirmed or declined.
+4. Reverse this deduction.
+
+The exact interfaces, formats, and service levels are defined together during
+onboarding. See [Requirements](/providers/requirements).

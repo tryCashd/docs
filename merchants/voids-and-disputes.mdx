@@ -1,0 +1,45 @@
+---
+title: "Voids and disputes"
+description: "Reversing a transaction and raising a settlement discrepancy."
+---
+
+## Voiding a transaction
+
+A void reverses a Cashd transaction and returns the value to the customer's
+wallet.
+
+| Item | Detail |
+|---|---|
+| Which transactions | Awaiting code, authorised, or cleared |
+| Which cannot be voided | Settled, failed, expired, or already reversed |
+| Window | Configured by Cashd and stated at onboarding. Requests after the window are rejected |
+| Reason | Required in the portal. One of: wrong amount, customer request, duplicate charge, other |
+
+Portal users must select a reason. The reason is recorded and visible to Cashd.
+
+## What a void does not do
+
+A void reverses the Cashd side only. If you have already released goods,
+delivered a service, or credited store credit, recovering that is your own
+process. Cashd does not recover value on your behalf.
+
+## After settlement
+
+Once a transaction is settled it can no longer be voided through the portal or
+the API. Contact `ops@trycashd.com` with the transaction identifiers.
+
+## Settlement discrepancies
+
+<Steps>
+  <Step title="Identify the payout">
+    Note the payout identifier and the period it covers.
+  </Step>
+  <Step title="Reconcile the line items">
+    Compare the payout's transactions against your own records for the same
+    period.
+  </Step>
+  <Step title="Raise it">
+    Email `ops@trycashd.com` with the payout identifier and the transaction
+    identifiers in question, within 30 calendar days of the payout date.
+  </Step>
+</Steps>

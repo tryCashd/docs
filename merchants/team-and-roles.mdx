@@ -1,0 +1,41 @@
+---
+title: "Team and roles"
+description: "Owner and cashier roles, inviting staff, revoking access."
+---
+
+## Roles
+
+| Role | Can do |
+|---|---|
+| **Owner** | Everything a cashier can do, plus manage team members, act on any outlet on the account, and view settlement reporting |
+| **Cashier** | Work within a single assigned outlet |
+
+Every team member holds exactly one role.
+
+## Inviting a team member
+
+Owners invite team members from the portal. An invitation is sent to the email
+address you supply, and the member sets their own password when accepting. See
+[First login](/merchants/portal-first-login).
+
+If an invitation is not received or has expired, an owner can resend it. Resending
+issues a fresh link and invalidates the previous one.
+
+## Changing a role
+
+Owners can change a team member's role. The change applies at their next request.
+
+## Removing access
+
+Owners can remove a team member. Removal is immediate.
+
+<Warning>
+Removing a team member does not revoke API credentials. API keys belong to the
+merchant account, not to a person. If a departing team member had access to a
+key, rotate it. See [Authentication](/integration/get-started/authentication).
+</Warning>
+
+## Separation of duties
+
+Cashd recommends at least two owners on every account, so that team management
+and unlocking are not blocked by one person's absence.

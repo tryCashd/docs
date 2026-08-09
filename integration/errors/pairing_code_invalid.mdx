@@ -1,0 +1,45 @@
+---
+title: "pairing_code_invalid"
+description: "HTTP 422 — validation error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `pairing_code_invalid` |
+| HTTP status | `422` |
+| Class | Validation |
+| Surface | Terminal pairing |
+| Safe to retry | Yes, with a correct code |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> That code didn't work. Check it and try again.
+
+## Cause
+
+The pairing code is unknown or already claimed. Both cases return this code so an unknown code cannot be distinguished from a claimed one.
+
+## What to do
+
+1. Check the code and enter it again.
+2. Request a new pairing code if it has been used.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "pairing_code_invalid",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/pairing_code_invalid",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

@@ -1,0 +1,55 @@
+---
+title: "Webhooks"
+description: "Event notifications, and why they are not the source of truth."
+---
+
+Cashd can POST lifecycle events to an HTTPS endpoint you register. Subscription
+is per-event and is configured by Cashd during onboarding.
+
+## Events
+
+| Event |
+|---|
+| `transaction.authorized` |
+| `transaction.redeemed` |
+| `transaction.settled` |
+| `transaction.failed` |
+| `transaction.expired` |
+| `transaction.reversed` |
+
+## Rules
+
+<Warning>
+Treat a webhook as a prompt to read the transaction. Do not fulfil, credit, or
+ship based on the payload.
+</Warning>
+
+| Requirement | Detail |
+|---|---|
+| Read before acting | On receipt, call the transaction read and act on that response |
+| Idempotent handlers | Deliveries are retried. Re-processing the same event must have no additional effect |
+| Respond fast | Return `2xx` first, then process asynchronously. A slow handler produces retries, which produce duplicates |
+| Never a hard dependency | Your reconciliation must converge with webhooks disabled entirely |
+| Out-of-order arrival | Do not assume events arrive in lifecycle order |
+
+## Payload
+
+Payloads contain merchant-visible fields only, including `merchant_reference` —
+the idempotency key you supplied when creating the transaction. Use it to
+correlate the event to your own order.
+
+No customer personal data, no one-time code, and no balance is ever included.
+
+## Endpoint requirements
+
+| Requirement |
+|---|
+| Public HTTPS endpoint. Non-public and non-HTTPS destinations are rejected at registration |
+| Returns `2xx` promptly on receipt |
+| Tolerates duplicate and out-of-order delivery |
+
+## Why reads remain authoritative
+
+A webhook can be delayed, duplicated, or delivered out of order. The transaction
+read reflects current state at the moment you call it. Webhooks reduce how long
+you wait; they do not change what is true.

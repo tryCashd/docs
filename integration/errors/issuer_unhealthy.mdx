@@ -1,0 +1,47 @@
+---
+title: "issuer_unhealthy"
+description: "HTTP 502 — upstream error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `issuer_unhealthy` |
+| HTTP status | `502` |
+| Class | Upstream |
+| Surface | Merchant API |
+| Safe to retry | Yes, once |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> The payment system is temporarily unavailable.
+| Hint | Wait a moment and try again. If this persists, contact support. |
+
+## Cause
+
+An upstream system Cashd depends on is unreachable.
+
+## What to do
+
+1. Retry once after a short delay.
+2. Fall back to another payment method.
+3. No money has moved.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "issuer_unhealthy",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/integration/errors/issuer_unhealthy",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/integration/errors/overview).

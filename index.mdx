@@ -1,20 +1,46 @@
 ---
-title: "Introduction"
-description: "Welcome to your project"
+title: "Cashd documentation"
+description: "Accept Cashd, become a provider, or integrate the Merchant API."
 ---
 
-Write a short description of your product here. What it does, who it's for, and what they can accomplish with it.
+Cashd converts loyalty points into SAR that consumers spend with participating
+merchants. Consumers link their loyalty programmes into a Cashd wallet.
+Merchants charge that wallet in SAR and are settled in SAR. Providers supply the
+points that fund it.
 
-<Tip>
-  Ready to make this your own? Start by editing this page. Update your `docs.json` file to customize your site. Then fill out the [Quickstart](/quickstart) page.
-</Tip>
+## Start here
 
-<Card title="Quickstart" icon="rocket" href="/quickstart">
-  This card links to the quickstart page in your project.
-</Card>
-<Card title="Components" icon="puzzle-piece" href="https://mintlify.com/docs/components">
-  Add cards, callouts, steps, tabs, and more to design and structure your pages.
-</Card>
-<Card title="Settings" icon="gear" href="https://mintlify.com/docs/organize/settings">
-  Set your site name, branding, and navigation in the `docs.json` file.
-</Card>
+<CardGroup cols={3}>
+  <Card title="Merchants" icon="store" href="/merchants/overview">
+    Accept Cashd as a payment method. Commercial terms, account setup, portal
+    use, settlements.
+  </Card>
+  <Card title="Providers" icon="gift" href="/providers/overview">
+    Make your loyalty programme spendable at Cashd merchants.
+  </Card>
+  <Card title="Integration" icon="code" href="/integration/overview">
+    Build against the Merchant API. Two options, full reference, error codes.
+  </Card>
+</CardGroup>
+
+## What Cashd does
+
+| Party | Gives | Receives |
+|---|---|---|
+| Consumer | Loyalty points from linked programmes | SAR spending power at any Cashd merchant |
+| Merchant | Goods or services | SAR settlement, net of the merchant discount |
+| Provider | Points redeemable through Cashd | Settlement of redeemed value, and engagement on otherwise dormant points |
+
+Cashd sits between the parties. A merchant never learns which programme funded a
+transaction, or what a consumer holds. A provider never learns where a consumer
+spends.
+
+## Key facts
+
+| Item | Value |
+|---|---|
+| Currency | SAR only |
+| Money unit | Integer halala. 1 SAR = 100 halala |
+| Consumer identifier | Saudi mobile number |
+| Languages | Arabic and English on every consumer-facing surface |
+| API version | v1 |
