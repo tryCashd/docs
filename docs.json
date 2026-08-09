@@ -16,12 +16,7 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:integrations@trycashd.com"
-      }
-    ],
+    "links": [],
     "primary": {
       "type": "button",
       "label": "Merchant portal",
