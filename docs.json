@@ -11,6 +11,18 @@
   "navigation": {
     "groups": []
   },
+  "redirects": [
+    { "source": "/errors/pairing_code_invalid", "destination": "/integration/errors/overview" },
+    { "source": "/errors/reviewer_account_forbidden", "destination": "/integration/errors/overview" },
+    { "source": "/errors/overlay_token_expired", "destination": "/integration/errors/overview" },
+    { "source": "/errors/overlay_already_responded", "destination": "/integration/errors/overview" },
+    { "source": "/errors/reset_code_invalid", "destination": "/integration/errors/overview" },
+    { "source": "/errors/reset_code_expired", "destination": "/integration/errors/overview" },
+    { "source": "/errors/reset_code_max_attempts", "destination": "/integration/errors/overview" },
+    { "source": "/errors/weak_password", "destination": "/integration/errors/overview" },
+    { "source": "/errors/checkout_session_expired", "destination": "/integration/errors/overview" },
+    { "source": "/errors/:slug*", "destination": "/integration/errors/:slug*" }
+  ],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
