@@ -7,7 +7,6 @@
     "light": "#4c7bff",
     "dark": "#053060"
   },
-  "favicon": "/favicon.svg",
   "navigation": {
     "groups": [
       {
@@ -70,44 +69,7 @@
       }
     ]
   },
-  "redirects": [
-    {
-      "source": "/errors/pairing_code_invalid",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/reviewer_account_forbidden",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/overlay_token_expired",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/overlay_already_responded",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/reset_code_invalid",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/reset_code_expired",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/reset_code_max_attempts",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/weak_password",
-      "destination": "/errors/overview"
-    },
-    {
-      "source": "/errors/checkout_session_expired",
-      "destination": "/errors/overview"
-    }
-  ],
+  "redirects": [],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
@@ -123,10 +85,7 @@
   "contextual": {
     "options": [
       "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "mcp"
+      "view"
     ]
   },
   "footer": {
