@@ -9,7 +9,94 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "groups": []
+    "groups": [
+      {
+        "group": "integration",
+        "pages": [
+          "integration/go-live",
+          "integration/overview",
+          {
+            "group": "concepts",
+            "pages": [
+              "integration/concepts/idempotency",
+              "integration/concepts/settlement-reconciliation",
+              "integration/concepts/transaction-states",
+              "integration/concepts/voids",
+              "integration/concepts/webhooks"
+            ]
+          },
+          {
+            "group": "direct-api",
+            "pages": [
+              "integration/direct-api/availability",
+              "integration/direct-api/create-and-confirm",
+              "integration/direct-api/otp-requirements",
+              "integration/direct-api/overview",
+              "integration/direct-api/reconciliation"
+            ]
+          },
+          {
+            "group": "errors",
+            "pages": [
+              "integration/errors/account_locked",
+              "integration/errors/adapter_timeout",
+              "integration/errors/amount_unavailable",
+              "integration/errors/authorization_unknown",
+              "integration/errors/bad_request",
+              "integration/errors/checkout_session_expired",
+              "integration/errors/checkout_unavailable",
+              "integration/errors/checkout_verification_required",
+              "integration/errors/forbidden",
+              "integration/errors/idempotency_conflict",
+              "integration/errors/idempotency_key_required",
+              "integration/errors/idempotency_key_too_long",
+              "integration/errors/insufficient_balance",
+              "integration/errors/insufficient_pool",
+              "integration/errors/invalid_otp",
+              "integration/errors/issuer_error",
+              "integration/errors/issuer_unhealthy",
+              "integration/errors/max_attempts",
+              "integration/errors/merchant_inactive",
+              "integration/errors/no_account",
+              "integration/errors/no_balance",
+              "integration/errors/not_found",
+              "integration/errors/overlay_already_responded",
+              "integration/errors/overlay_token_expired",
+              "integration/errors/overview",
+              "integration/errors/pairing_code_invalid",
+              "integration/errors/rate_limited",
+              "integration/errors/reset_code_expired",
+              "integration/errors/reset_code_invalid",
+              "integration/errors/reset_code_max_attempts",
+              "integration/errors/reviewer_account_forbidden",
+              "integration/errors/unauthorized",
+              "integration/errors/validation_failed",
+              "integration/errors/void_window_expired",
+              "integration/errors/weak_password"
+            ]
+          },
+          {
+            "group": "get-started",
+            "pages": [
+              "integration/get-started/authentication",
+              "integration/get-started/conventions",
+              "integration/get-started/environments"
+            ]
+          },
+          {
+            "group": "web-checkout",
+            "pages": [
+              "integration/web-checkout/create-session",
+              "integration/web-checkout/open-amount",
+              "integration/web-checkout/overview",
+              "integration/web-checkout/reconciliation",
+              "integration/web-checkout/resolve-outcome",
+              "integration/web-checkout/return-handling"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "redirects": [
     { "source": "/errors/pairing_code_invalid", "destination": "/integration/errors/overview" },
