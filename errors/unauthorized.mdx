@@ -26,7 +26,7 @@ The credential is missing, malformed, revoked, or issued for a different environ
 ## What to do
 
 1. Confirm the `Authorization: Bearer` header is present and complete.
-2. Confirm the key matches the environment: `sb` keys are not valid in production, and `live` keys are not valid in non-production.
+2. Confirm the key matches the environment you are calling. A key is only valid in the environment it was issued for — staging keys are not accepted on `api.trycashd.com`, and production keys are not accepted on `staging-api.trycashd.com`.
 3. Confirm the key has not been revoked.
 
 ## Response shape

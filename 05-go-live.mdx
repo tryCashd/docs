@@ -3,8 +3,14 @@ title: "Go-live checklist"
 description: "What Cashd certifies before issuing production credentials."
 ---
 
-Certification runs against the non-production environment. Demonstrate every
-applicable item.
+Certification runs against [staging](/01-start/01-environments)
+(`https://staging-api.trycashd.com`). Demonstrate every applicable item there
+before production credentials are issued.
+
+Some items below need specific test data — a settled transaction to attempt a
+void against, a wallet balance that only partially covers an amount. Confirm
+with `integrations@trycashd.com` what is provisioned on your staging merchant
+before you script these scenarios.
 
 ## Both options
 
