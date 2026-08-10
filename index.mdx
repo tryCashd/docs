@@ -1,39 +1,22 @@
 ---
 title: "Cashd documentation"
-description: "Accept Cashd, become a provider, or integrate the Merchant API."
+description: "Integrate the Cashd Merchant API."
 ---
 
 Cashd converts loyalty points into SAR that consumers spend with participating
-merchants. Consumers link their loyalty programmes into a Cashd wallet.
-Merchants charge that wallet in SAR and are settled in SAR. Providers supply the
-points that fund it.
+merchants. Consumers link their loyalty programmes into a Cashd wallet. Your
+integration charges that wallet in SAR, and you are settled in SAR.
 
 ## Start here
 
-<CardGroup cols={3}>
-  <Card title="Merchants" icon="store" href="/merchants/overview">
-    Accept Cashd as a payment method. Commercial terms, account setup, portal
-    use, settlements.
+<CardGroup cols={2}>
+  <Card title="Integration overview" icon="code" href="/integration/overview">
+    Two options, and what to read first.
   </Card>
-  <Card title="Providers" icon="gift" href="/providers/overview">
-    Make your loyalty programme spendable at Cashd merchants.
-  </Card>
-  <Card title="Integration" icon="code" href="/integration/overview">
-    Build against the Merchant API. Two options, full reference, error codes.
+  <Card title="Get started" icon="key" href="/integration/get-started/environments">
+    Environments, authentication, and conventions.
   </Card>
 </CardGroup>
-
-## What Cashd does
-
-| Party | Gives | Receives |
-|---|---|---|
-| Consumer | Loyalty points from linked programmes | SAR spending power at any Cashd merchant |
-| Merchant | Goods or services | SAR settlement, net of the merchant discount |
-| Provider | Points redeemable through Cashd | Settlement of redeemed value, and engagement on otherwise dormant points |
-
-Cashd sits between the parties. A merchant never learns which programme funded a
-transaction, or what a consumer holds. A provider never learns where a consumer
-spends.
 
 ## Key facts
 
@@ -44,3 +27,6 @@ spends.
 | Consumer identifier | Saudi mobile number |
 | Languages | Arabic and English on every consumer-facing surface |
 | API version | v1 |
+
+A merchant never learns which loyalty programme funded a transaction, or what a
+consumer holds.

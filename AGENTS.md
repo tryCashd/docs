@@ -8,23 +8,17 @@
 - Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
 - Use the Mintlify docs MCP server, `https://www.mintlify.com/docs/mcp`, to query information about using Mintlify via MCP
 
-## Audiences
+## Audience
 
-| Tab | Reader | Assumes |
-|---|---|---|
-| Merchants | Business owner, finance, store operations | No engineering knowledge |
-| Providers | Loyalty programme commercial lead | No engineering knowledge |
-| Integration | Engineers building against the Merchant API | Working knowledge of HTTP APIs |
-
-A page belongs to one audience. Do not mix technical detail into the Merchants
-or Providers tabs beyond a link into Integration.
+Engineers building against the Merchant API. Assume working knowledge of HTTP
+APIs. Commercial and operational onboarding content is out of scope for this
+site.
 
 ## Terminology
 
 - **Consumer** or **customer** — the person paying with Cashd. Not "user".
 - **Merchant** — a business accepting Cashd. Not "vendor" or "partner" when the merchant is meant specifically.
-- **Provider** — a loyalty programme whose points fund Cashd wallets. Not "issuer" in partner-facing content.
-- **Partner** — either a merchant or a provider, where the statement applies to both.
+- **Loyalty programme** — the points source funding a Cashd wallet. Never named in partner-facing content.
 - **Transaction** — a debit against a consumer wallet. Not "payment" or "charge" in API contexts.
 - **Wallet** — the consumer's SAR balance in Cashd. A merchant-operated balance is a **merchant wallet** or **store credit**, never just "wallet".
 - **Halala** — the integer money unit. 1 SAR = 100 halala. Money fields are `*_halalas`.
@@ -51,17 +45,17 @@ or Providers tabs beyond a link into Integration.
 
 Publish:
 
-- How to accept Cashd, commercially and operationally
 - How to integrate against the Merchant API
-- Error codes reachable by a partner or surfaced to a consumer
-- Anything already stated in a merchant or provider agreement
+- Error codes reachable by a merchant or surfaced to a consumer
+- Anything already stated in a merchant agreement
 
 Never publish:
 
+- Commercial, onboarding, or account-management content — this site is technical only
 - Internal runbooks, SOPs, or operational procedures
 - Infrastructure, cluster, deployment, or monitoring detail
-- Provider or merchant names not already public, and any commercial terms
-  specific to one partner
+- Loyalty programme or merchant names not already public, and any commercial
+  terms specific to one merchant
 - Credit risk positions, revenue recognition policy, breakage assumptions, or
   any internal accounting treatment
 - Internal ticket identifiers, pull request numbers, or repository paths
