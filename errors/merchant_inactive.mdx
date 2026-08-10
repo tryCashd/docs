@@ -1,0 +1,45 @@
+---
+title: "merchant_inactive"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `merchant_inactive` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> This merchant account is not active.
+
+## Cause
+
+Your merchant account is suspended and cannot create transactions.
+
+## What to do
+
+1. Contact `ops@trycashd.com`.
+2. Stop offering Cashd until the account is reactivated.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "merchant_inactive",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/merchant_inactive",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

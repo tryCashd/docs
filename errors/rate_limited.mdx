@@ -1,0 +1,45 @@
+---
+title: "rate_limited"
+description: "HTTP 429 — rate limit error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `rate_limited` |
+| HTTP status | `429` |
+| Class | Rate limit |
+| Surface | All surfaces |
+| Safe to retry | Yes, with backoff |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Too many requests. Please slow down and try again.
+
+## Cause
+
+You exceeded the request rate permitted for your account or source address.
+
+## What to do
+
+1. Back off exponentially with jitter, starting around 500 ms and capping around 30 s.
+2. Batch reconciliation reads rather than issuing one request per record.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "rate_limited",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/rate_limited",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

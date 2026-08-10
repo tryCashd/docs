@@ -1,0 +1,51 @@
+---
+title: "Code requirements"
+description: "Limits and obligations your interface must respect."
+---
+
+The one-time code is a credential. Choosing Direct API means you handle it.
+
+## Limits
+
+| Item | Value | What your interface must do |
+|---|---|---|
+| Validity | 3 minutes | Render the countdown from `expires_at` on the create response. Never hardcode it. |
+| Attempts | 3 per transaction | Show remaining attempts. After the third wrong code the transaction is terminal and a new one is required. |
+| Resend | 3 codes per mobile number per 15 minutes | Rate-limit your resend control and tell the customer the limit when they hit it. |
+
+<Warning>
+A resend button that ignores the per-number limit locks your customer out of
+their own payment for 15 minutes.
+</Warning>
+
+## Handling the code
+
+| Requirement | Detail |
+|---|---|
+| Never log it | Not in application logs, access logs, or debug output |
+| Never capture it | Exclude the input from analytics, heatmaps, and session replay |
+| Never store it | Not in a database, cache, or crash report |
+| Never display it back | Not in confirmation screens, receipts, or support tooling |
+
+Verify these by inspection before certification, not by assumption.
+
+## Messages you must provide
+
+Every state below needs Arabic and English copy with correct right-to-left
+layout. Cashd returns both `message_en` and `message_ar` on every error — render
+the one matching the customer's locale.
+
+| State | Error code |
+|---|---|
+| Wrong code, attempts remain | [`invalid_otp`](/errors/invalid_otp) |
+| Attempts exhausted | [`max_attempts`](/errors/max_attempts) |
+| Number not registered | [`no_account`](/errors/no_account) |
+| Balance too low | [`insufficient_balance`](/errors/insufficient_balance) |
+| Account locked | [`account_locked`](/errors/account_locked) |
+| Too many requests | [`rate_limited`](/errors/rate_limited) |
+| Upstream unavailable | [`issuer_unhealthy`](/errors/issuer_unhealthy) |
+
+## Expiry
+
+When the countdown reaches zero the transaction expires. Offer to start a new
+payment rather than leaving the customer on a dead screen.

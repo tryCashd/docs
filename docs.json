@@ -9,19 +9,104 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "groups": []
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": [
+          "index",
+          "01-start/01-environments",
+          "01-start/02-authentication",
+          "01-start/03-conventions"
+        ]
+      },
+      {
+        "group": "Core concepts",
+        "pages": [
+          "02-concepts/01-idempotency",
+          "02-concepts/02-transaction-states",
+          "02-concepts/03-recovering-outcomes",
+          "02-concepts/04-voids",
+          "02-concepts/05-webhooks",
+          "02-concepts/06-settlement"
+        ]
+      },
+      {
+        "group": "Accept a payment",
+        "pages": [
+          "03-accept/01-choosing",
+          {
+            "group": "Web Checkout",
+            "pages": [
+              "03-accept/02-web-checkout/01-overview",
+              "03-accept/02-web-checkout/02-create-session",
+              "03-accept/02-web-checkout/03-return-handling",
+              "03-accept/02-web-checkout/04-resolve-outcome",
+              "03-accept/02-web-checkout/05-open-amount"
+            ]
+          },
+          {
+            "group": "Direct API",
+            "pages": [
+              "03-accept/03-direct-api/01-overview",
+              "03-accept/03-direct-api/02-availability",
+              "03-accept/03-direct-api/03-create-and-confirm",
+              "03-accept/03-direct-api/04-code-requirements"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Errors",
+        "pages": [
+          "errors/overview"
+        ]
+      },
+      {
+        "group": "Reference",
+        "pages": [
+          "05-go-live",
+          "06-changelog"
+        ]
+      }
+    ]
   },
   "redirects": [
-    { "source": "/errors/pairing_code_invalid", "destination": "/integration/errors/overview" },
-    { "source": "/errors/reviewer_account_forbidden", "destination": "/integration/errors/overview" },
-    { "source": "/errors/overlay_token_expired", "destination": "/integration/errors/overview" },
-    { "source": "/errors/overlay_already_responded", "destination": "/integration/errors/overview" },
-    { "source": "/errors/reset_code_invalid", "destination": "/integration/errors/overview" },
-    { "source": "/errors/reset_code_expired", "destination": "/integration/errors/overview" },
-    { "source": "/errors/reset_code_max_attempts", "destination": "/integration/errors/overview" },
-    { "source": "/errors/weak_password", "destination": "/integration/errors/overview" },
-    { "source": "/errors/checkout_session_expired", "destination": "/integration/errors/overview" },
-    { "source": "/errors/:slug*", "destination": "/integration/errors/:slug*" }
+    {
+      "source": "/errors/pairing_code_invalid",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/reviewer_account_forbidden",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/overlay_token_expired",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/overlay_already_responded",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/reset_code_invalid",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/reset_code_expired",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/reset_code_max_attempts",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/weak_password",
+      "destination": "/errors/overview"
+    },
+    {
+      "source": "/errors/checkout_session_expired",
+      "destination": "/errors/overview"
+    }
   ],
   "logo": {
     "light": "/logo/light.svg",

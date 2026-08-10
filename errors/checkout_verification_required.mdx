@@ -1,0 +1,45 @@
+---
+title: "checkout_verification_required"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `checkout_verification_required` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Hosted checkout |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Please verify your mobile number before continuing.
+
+## Cause
+
+An open-amount debit was attempted before the session passed the identity check.
+
+## What to do
+
+1. The customer completes the verification step on the hosted page.
+2. No partner action.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "checkout_verification_required",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/checkout_verification_required",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

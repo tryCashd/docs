@@ -1,0 +1,73 @@
+---
+title: "Recovering outcomes"
+description: "Resolving charges whose result never reached you."
+---
+
+A customer can be debited without you learning it. On Web Checkout the customer
+never returns from the Cashd page; on Direct API the confirm response is lost in
+transit. Both leave you holding an order you cannot complete and a customer who
+has paid.
+
+A scheduled job that reads the outcome back closes both. Build it before you
+build the return handler — the return handler is an optimisation, the job is the
+guarantee.
+
+## The job
+
+Run it every few minutes, over every charge you hold in a non-final state.
+
+<CodeGroup>
+
+```text Web Checkout
+for each order still awaiting, created more than ~2 minutes ago:
+    read by_reference
+    apply the branching in Resolve the outcome
+    if still pending well past session expiry:
+        mark not completed and raise it operationally
+```
+
+```text Direct API
+for each transaction you hold in a non-final state:
+    read GET /merchant/transactions/:id
+    apply the state table below
+    fulfil, or mark terminal
+```
+
+</CodeGroup>
+
+The two-minute grace on Web Checkout avoids racing a customer who is still on the
+Cashd page. Direct API needs no grace — there is no page to be on.
+
+## Acting on what you read
+
+| `status` | Action |
+|---|---|
+| `authorized`, `redeemed` | Fulfil if not already fulfilled |
+| `pending_otp` | Still in progress. Leave it; it will expire or fail |
+| `failed`, `expired` | Terminal. No money moved |
+| `reversed` | Reverse any fulfilment |
+
+## Fulfil exactly once
+
+Your confirm or return handler and this job can act on the same charge at the
+same moment. Put a unique constraint on the Cashd transaction identifier in the
+table where you record fulfilment, and let the database settle the race.
+
+```sql
+CREATE UNIQUE INDEX idx_fulfilment_cashd_txn
+  ON fulfilments (cashd_transaction_id);
+```
+
+## What to alert on
+
+| Signal | Meaning |
+|---|---|
+| Charges in a non-final state beyond expiry plus a margin | The job is not running, or not converging. This number should be zero |
+| Rising `pending` results on old references | Customers are abandoning the Cashd page, or the page is failing |
+| Rising [`authorization_unknown`](/errors/authorization_unknown) rate | An upstream problem. Reads still resolve it, but raise it with Cashd |
+
+## Test it before you launch
+
+Certification includes an interrupted-return test: the session is terminated
+immediately after a successful debit, and this job must complete the fulfilment
+with no redirect and no confirm response ever arriving.

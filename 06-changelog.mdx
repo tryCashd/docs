@@ -1,0 +1,24 @@
+---
+title: "Changelog"
+description: "Documentation and API changes."
+hidden: true
+---
+
+## 2026-08-10
+
+Initial publication.
+
+- Integration: Web Checkout and Direct API, concepts, and the go-live checklist.
+- Errors: every code Cashd emits, at `/errors/<code>`.
+
+### Corrections to previously issued material
+
+| Item | Previously stated | Correct |
+| --- | --- | --- |
+| Idempotency header | `Idempotency-Key` | `X-Idempotency-Key` |
+| Idempotency requirement | Required; absence returns `400` | Optional today, required in a future version |
+| Idempotency replay | `4xx` responses replayed | `4xx` and `5xx` are re-executed; only `2xx` and `3xx` are replayed |
+| Webhooks | Not yet available | Available, six events |
+| Settlement cycle | A fixed cadence | As agreed in the merchant agreement; read the period from each payout record |
+
+If you integrated against earlier material, check the idempotency header name first — it is the change most likely to affect a working integration.

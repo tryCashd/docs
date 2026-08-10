@@ -1,0 +1,47 @@
+---
+title: "validation_failed"
+description: "HTTP 422 — validation error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `validation_failed` |
+| HTTP status | `422` |
+| Class | Validation |
+| Surface | All surfaces |
+| Safe to retry | No, fix the request or the configuration |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Some details couldn't be processed.
+| Hint | Check the phone number and amount, then try again. |
+
+## Cause
+
+A field failed validation, or a required merchant configuration is absent. On session creation this includes missing or partial `redirect_urls` and an unregistered redirect host.
+
+## What to do
+
+1. Check the phone number format and that the amount is a positive integer in halala.
+2. For session creation, confirm all three redirect URLs are present and their hosts are registered with Cashd.
+3. If the payload is valid and this persists, your merchant configuration is incomplete — raise it with `integrations@trycashd.com` rather than debugging the request further.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "validation_failed",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/validation_failed",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

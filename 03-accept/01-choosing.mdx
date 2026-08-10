@@ -1,0 +1,55 @@
+---
+title: "Integration overview"
+description: "Two ways to accept Cashd, and what to read first."
+---
+
+Cashd provides two integration options against the Merchant API v1. Both use the
+same credentials, settlement stream, and reporting. The difference is who hosts
+the payment step.
+
+<CardGroup cols={2}>
+  <Card title="Web Checkout" icon="browser" href="/03-accept/02-web-checkout/01-overview">
+    Cashd hosts the payment page. You create a session, send the customer there,
+    and read the outcome. Two server calls.
+  </Card>
+  <Card title="Direct API" icon="terminal" href="/03-accept/03-direct-api/01-overview">
+    You host the payment step and handle the one-time code yourself. Four calls.
+  </Card>
+</CardGroup>
+
+## Choosing
+
+| Condition | Option |
+|---|---|
+| A browser or in-app webview is available at the payment step | Web Checkout |
+| You are funding a customer wallet or store credit | Web Checkout |
+| No browser or webview is available | Direct API |
+| Physical till, kiosk, or call centre | Direct API |
+| The payment interface must stay in your own product | Direct API |
+
+You can run both on one merchant account.
+
+## Before you write code
+
+<Steps>
+  <Step title="Read the ground rules">
+    [Conventions](/01-start/03-conventions) — money units, phone
+    formats, and the rules that cause most first-week bugs.
+  </Step>
+  <Step title="Get your credentials">
+    [Environments](/01-start/01-environments) and
+    [Authentication](/01-start/02-authentication).
+  </Step>
+  <Step title="Understand idempotency">
+    [Idempotency](/02-concepts/01-idempotency). A retry loop without a
+    stable key can double-charge.
+  </Step>
+</Steps>
+
+## Two rules that apply to both options
+
+1. **Fulfil on a transaction read, never on a redirect, a webhook, or a single
+   synchronous response.** See
+   [Transaction states](/02-concepts/02-transaction-states).
+2. **Run a reconciliation process.** Any journey can be interrupted after the
+   wallet is debited. Without reconciliation you lose those transactions.

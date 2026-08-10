@@ -1,0 +1,47 @@
+---
+title: "unauthorized"
+description: "HTTP 401 — authentication error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `unauthorized` |
+| HTTP status | `401` |
+| Class | Authentication |
+| Surface | All surfaces |
+| Safe to retry | No, fix the credential |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Email or password is incorrect.
+| Hint | Check your credentials and try again. |
+
+## Cause
+
+The credential is missing, malformed, revoked, or issued for a different environment.
+
+## What to do
+
+1. Confirm the `Authorization: Bearer` header is present and complete.
+2. Confirm the key matches the environment: `sb` keys are not valid in production, and `live` keys are not valid in non-production.
+3. Confirm the key has not been revoked.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "unauthorized",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/unauthorized",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

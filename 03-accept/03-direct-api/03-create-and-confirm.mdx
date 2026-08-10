@@ -1,0 +1,98 @@
+---
+title: "Create and confirm"
+description: "The two money-path calls."
+---
+
+## Create the transaction
+
+Creates a transaction awaiting the code and sends the SMS.
+
+```http
+POST {base}/api/v1/merchant/transactions
+Authorization: Bearer tc_live_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+X-Idempotency-Key: order_01J8ZP4K2N
+Content-Type: application/json
+
+{ "phone": "+966501234567", "amount_halalas": 12500 }
+```
+
+```http
+201 Created
+
+{
+  "public_id": "txn_0f8c2d1e-4a7b-4c3f-9e21-6b5a8c7d0e11",
+  "status": "pending_otp",
+  "amount_halalas": 12500,
+  "consumer_phone_masked": "+9665•••••567",
+  "void_reason": null,
+  "created_at": "2026-08-09T21:02:11Z",
+  "expires_at": "2026-08-09T21:05:11Z",
+  "availability": {
+    "status": "available_full",
+    "requested_halala": 12500,
+    "authorizable_halala": 12500,
+    "shortfall_halala": 0,
+    "confirmation_expires_at": null
+  }
+}
+```
+
+<Warning>
+Send `X-Idempotency-Key`, and keep it stable across retries of the same payment
+intent. A retry with a fresh key sends a second SMS and can open a second
+transaction against the same customer.
+</Warning>
+
+Render the code countdown from `expires_at`. Do not hardcode the duration.
+
+## Confirm the code
+
+```http
+POST {base}/api/v1/merchant/transactions/txn_0f8c2d1e-4a7b-4c3f-9e21-6b5a8c7d0e11/confirm
+Authorization: Bearer tc_live_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+X-Idempotency-Key: order_01J8ZP4K2N-confirm
+Content-Type: application/json
+
+{ "otp_code": "483921" }
+```
+
+```http
+200 OK
+
+{
+  "public_id": "txn_0f8c2d1e-4a7b-4c3f-9e21-6b5a8c7d0e11",
+  "status": "authorized",
+  "amount_halalas": 12500,
+  "consumer_phone_masked": "+9665•••••567",
+  "void_reason": null,
+  "created_at": "2026-08-09T21:02:11Z",
+  "expires_at": null
+}
+```
+
+`:id` accepts the `txn_`-prefixed identifier or the bare identifier.
+
+## When to fulfil
+
+`authorized` is the threshold. Clearing to `redeemed` happens asynchronously
+afterwards and must not be waited on in the payment path.
+
+## When the outcome is unclear
+
+If confirm returns [`authorization_unknown`](/errors/authorization_unknown),
+times out, or fails at the transport layer, the debit may well have succeeded.
+
+<Warning>
+Do not treat a timeout as a failure, and do not blindly retry the confirm. Read
+`GET /merchant/transactions/:id` and act on what it returns.
+</Warning>
+
+## Errors on these calls
+
+| Code | Meaning |
+|---|---|
+| [`no_account`](/errors/no_account) | The number is not registered with Cashd |
+| [`insufficient_balance`](/errors/insufficient_balance) | Amount exceeds what is available |
+| [`invalid_otp`](/errors/invalid_otp) | Wrong code. Attempts remain |
+| [`max_attempts`](/errors/max_attempts) | Three wrong codes. Terminal |
+| [`validation_failed`](/errors/validation_failed) | Field validation, or merchant configuration incomplete |

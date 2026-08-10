@@ -1,0 +1,46 @@
+---
+title: "account_locked"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `account_locked` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> This account has been locked after too many failed attempts.
+| Hint | Contact your manager or Cashd support to unlock it. |
+
+## Cause
+
+The customer's Cashd account is locked and cannot authorise spend.
+
+## What to do
+
+1. Offer another payment method.
+2. The customer contacts Cashd support to unlock the account.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "account_locked",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/account_locked",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

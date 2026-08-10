@@ -1,0 +1,46 @@
+---
+title: "void_window_expired"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `void_window_expired` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> This transaction is outside the void window and can no longer be reversed.
+| Hint | Contact support if you need to reverse an older transaction. |
+
+## Cause
+
+The transaction is older than the void window configured for your account.
+
+## What to do
+
+1. Contact `ops@trycashd.com` with the transaction identifier for a manual reversal.
+2. Do not retry.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "void_window_expired",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/void_window_expired",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).

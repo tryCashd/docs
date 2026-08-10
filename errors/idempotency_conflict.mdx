@@ -1,0 +1,46 @@
+---
+title: "idempotency_conflict"
+description: "HTTP 409 — validation error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `idempotency_conflict` |
+| HTTP status | `409` |
+| Class | Validation |
+| Surface | Merchant API |
+| Safe to retry | No |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> Idempotency-Key reused with a different request body.
+
+## Cause
+
+The same `X-Idempotency-Key` was sent with a different request body. This is a defect in the caller: one key represents one payment intent.
+
+## What to do
+
+1. Generate a new key for the new request.
+2. Persist the key on your order record so retries of the same intent reuse it.
+3. Never generate a fresh key per HTTP attempt, and never reuse one across amounts or customers.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "idempotency_conflict",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/idempotency_conflict",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).
