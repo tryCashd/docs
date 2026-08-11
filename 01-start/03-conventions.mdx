@@ -5,12 +5,32 @@ description: "Money, identifiers, formats, and language."
 
 ## Money
 
-All money fields are integers in halala, named `*_halalas`.
+Money is always a pair: an `amount` and the `currency` it is denominated in.
+`amount` is an integer in that currency's **minor unit**.
+
+```json
+{ "amount": 12500, "currency": "SAR" }
+```
+
+For SAR the minor unit is the halala, and 100 of them make one riyal:
 
 ```
-1 SAR = 100 halala
+1 SAR   = 100
 SAR 125.00 = 12500
 ```
+
+Read the pair, not the number. How many minor units make one unit of currency
+depends on the currency — SAR and USD have two decimal places, Japanese yen has
+none, Kuwaiti dinar has three — so `amount` on its own is not a money value.
+Code that divides by 100 without looking at `currency` is correct today and
+wrong the day that stops being the only currency.
+
+`currency` is `SAR` on every endpoint. It is on the wire anyway, because a
+payload that does not name its currency can only be read by someone who already
+knows the answer, and that assumption stays invisible until it breaks.
+
+Payloads carrying several amounts — settlements, dashboards — name each figure
+and carry one `currency` for the object.
 
 <Warning>
 Do not represent money as a floating-point value anywhere in your integration.

@@ -21,7 +21,9 @@ site.
 - **Loyalty programme** — the points source funding a Cashd wallet. Never named in partner-facing content.
 - **Transaction** — a debit against a consumer wallet. Not "payment" or "charge" in API contexts.
 - **Wallet** — the consumer's SAR balance in Cashd. A merchant-operated balance is a **merchant wallet** or **store credit**, never just "wallet".
-- **Halala** — the integer money unit. 1 SAR = 100 halala. Money fields are `*_halalas`.
+- **Money** — always the pair `amount` + `currency`. `amount` is an integer in the
+  currency's minor unit; for SAR that is the halala, 1 SAR = 100. Never write a
+  money field without its currency, and never divide by 100 without checking it.
 - **Merchant discount** — the percentage deducted at settlement. Not "commission", not "interchange", in partner-facing content.
 - **Void** — reversing a transaction through the API. Not "refund" or "cancel".
 - **Session** — a hosted-checkout session. Not "checkout" alone.
