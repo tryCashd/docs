@@ -9,7 +9,7 @@ the amount need not be fixed in advance.
 
 ## Creating the session
 
-Set `amount_mode` to `open` and omit `amount_halalas`.
+Set `amount_mode` to `open` and omit `amount`.
 
 ```json
 {
@@ -54,7 +54,7 @@ learns only whether the amount they typed is available.
 | Difference | Handling |
 |---|---|
 | You do not know the amount in advance | Create your order record without a fixed value |
-| The amount arrives at resolution | Read `amount_halalas` from the transaction returned by [`by_reference`](/03-accept/02-web-checkout/04-resolve-outcome) and update your record |
+| The amount arrives at resolution | Read `amount` from the transaction returned by [`by_reference`](/03-accept/02-web-checkout/04-resolve-outcome) and update your record |
 | The customer may enter less than you expected | Credit exactly what the transaction states |
 
 Everything else — return handling, resolution, reconciliation, single fulfilment —

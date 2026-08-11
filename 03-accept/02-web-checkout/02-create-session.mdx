@@ -14,7 +14,7 @@ Content-Type: application/json
 Accept-Language: ar
 
 {
-  "amount_halalas": 10000,
+  "amount": 10000,
   "reference": "order_01J8ZP4K2N",
   "phone": "+966501234567",
   "locale": "sa-ar",
@@ -41,7 +41,7 @@ Accept-Language: ar
 
 | Field | Required | Notes |
 |---|---|---|
-| `amount_halalas` | Yes | Integer halala. Fixed at creation and server-authoritative — the customer cannot change it on the hosted page. Omit only in the [open-amount variant](/03-accept/02-web-checkout/05-open-amount). |
+| `amount` | Yes | Integer halala. Fixed at creation and server-authoritative — the customer cannot change it on the hosted page. Omit only in the [open-amount variant](/03-accept/02-web-checkout/05-open-amount). |
 | `reference` | Yes in practice | Your own order or intent identifier, unique per intent. This is how you resolve the outcome. |
 | `redirect_urls` | Yes | `success`, `failure`, and `cancel` are all required. Each host must be pre-registered with Cashd. |
 | `phone` | No | Pre-fills the hosted page. Send it when you know it. |
