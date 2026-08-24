@@ -9,12 +9,10 @@ Send a client-generated key on every state-changing request.
 X-Idempotency-Key: <unique string, maximum 200 characters>
 ```
 
-Note the `X-` prefix.
-
 ## Behaviour
 
 | Condition | Result |
-|---|---|
+| --- | --- |
 | New key | Processed. A `2xx` or `3xx` response is stored for replay. |
 | Same key, same body, previously succeeded | The stored response is replayed without re-running the operation. Safe to retry on any network failure. |
 | Same key, same body, previously failed with `4xx` or `5xx` | Re-executed. Failures are not replayed, because the underlying state may have changed — the customer may have topped up since. |
@@ -22,25 +20,21 @@ Note the `X-` prefix.
 | Header absent | Processed with no replay protection. |
 
 <Note>
-The header is currently optional and its absence is not an error. It becomes
-required in a future API version. Send it now — without it, a retry after a
-network timeout can produce a second debit.
+  The header is currently optional and its absence is not an error. It becomes required in a future API version. Send it now — without it, a retry after a network timeout can produce a second debit.
 </Note>
 
 ## Generating keys
 
-Generate one key **per payment intent**, not per HTTP attempt. Persist it on your
-own order record so every retry of that intent reuses it.
+Generate one key **per payment intent**, not per HTTP attempt. Persist it on your own order record so every retry of that intent reuses it.
 
-```
+```text
 order created         → key = order_01J8ZP4K2N        (generated once, stored)
 attempt 1 times out   → retry with order_01J8ZP4K2N
 attempt 2 succeeds    → same key, response stored
 ```
 
 <Warning>
-A retry loop that generates a fresh key per attempt defeats the mechanism
-entirely and is the most common cause of double charges.
+  A retry loop that generates a fresh key per attempt defeats the mechanism entirely and is the most common cause of double charges.
 </Warning>
 
 ## Rules
@@ -51,6 +45,4 @@ entirely and is the most common cause of double charges.
 
 ## Direct API note
 
-On `POST /merchant/transactions`, the key is also recorded as the transaction's
-merchant reference and returned in webhook payloads as `merchant_reference`. Use
-it to correlate a webhook to your own order.
+On `POST /merchant/transactions`, the key is also recorded as the transaction's merchant reference and returned in webhook payloads as `merchant_reference`. Use it to correlate a webhook to your own order.

@@ -5,8 +5,7 @@ description: "Money, identifiers, formats, and language."
 
 ## Money
 
-Money is always a pair: an `amount` and the `currency` it is denominated in.
-`amount` is an integer in that currency's **minor unit**.
+Money is always a pair: an `amount` and the `currency` it is denominated in. `amount` is an integer in that currency's **minor unit**.
 
 ```json
 { "amount": 12500, "currency": "SAR" }
@@ -14,51 +13,34 @@ Money is always a pair: an `amount` and the `currency` it is denominated in.
 
 For SAR the minor unit is the halala, and 100 of them make one riyal:
 
-```
-1 SAR   = 100
+```text
+SAR 1.00   = 100
 SAR 125.00 = 12500
 ```
 
-Read the pair, not the number. How many minor units make one unit of currency
-depends on the currency — SAR and USD have two decimal places, Japanese yen has
-none, Kuwaiti dinar has three — so `amount` on its own is not a money value.
-Code that divides by 100 without looking at `currency` is correct today and
-wrong the day that stops being the only currency.
+`currency` is `SAR` on every endpoint. It is on the wire anyway, because a payload that does not name its currency can only be read by someone who already knows the answer, and that assumption stays invisible until it breaks.
 
-`currency` is `SAR` on every endpoint. It is on the wire anyway, because a
-payload that does not name its currency can only be read by someone who already
-knows the answer, and that assumption stays invisible until it breaks.
-
-Payloads carrying several amounts — settlements, dashboards — name each figure
-and carry one `currency` for the object.
-
-<Warning>
-Do not represent money as a floating-point value anywhere in your integration.
-Rounding drift surfaces at settlement, months later.
-</Warning>
+Payloads carrying several amounts — settlements, dashboards — name each figure and carry one `currency` for the object.
 
 ## Consumer identifier
 
 A Saudi mobile number. `+9665XXXXXXXX` is canonical and always safe.
 
 | Accepted | Example |
-|---|---|
+| --- | --- |
 | E.164 | `+966501234567` |
 | International without `+` | `966501234567` |
 | International with `00` | `00966501234567` |
 | Local | `0501234567` |
 | Subscriber only | `501234567` |
 
-Whitespace and dashes are stripped. Cashd normalises server-side, so a consumer
-who registered as `0501234567` is found by `+966501234567`.
+Whitespace and dashes are stripped. Cashd normalises server-side, so a consumer who registered as `0501234567` is found by `+966501234567`.
 
-Non-Saudi numbers, landlines, and anything that does not reduce to a nine-digit
-subscriber number starting with `5` are rejected.
+Non-Saudi numbers, landlines, and anything that does not reduce to a nine-digit subscriber number starting with `5` are rejected.
 
 ## Transaction identifiers
 
-Transactions carry a `public_id` of the form `txn_<uuid>`. Endpoints accept
-either the prefixed form or the bare identifier.
+Transactions carry a `public_id` of the form `txn_<uuid>`. Endpoints accept either the prefixed form or the bare identifier.
 
 ## Timestamps
 
@@ -66,15 +48,11 @@ ISO 8601, UTC. Example: `2026-08-09T21:02:11Z`.
 
 ## Language
 
-Send `Accept-Language: ar` or `Accept-Language: en`. Every error carries both
-`message_en` and `message_ar`. Render the one matching your customer's locale,
-with right-to-left layout for Arabic.
+Send `Accept-Language: ar` or `Accept-Language: en`. Every error carries both `message_en` and `message_ar`. Render the one matching your customer's locale, with right-to-left layout for Arabic.
 
 ## Versioning
 
-The API is URL-versioned at `/api/v1`. Breaking changes are issued under a new
-major version, and existing routes remain supported for a defined transition
-period.
+The API is URL-versioned at `/api/v1`. Breaking changes are issued under a new major version, and existing routes remain supported for a defined transition period.
 
 ## Transport
 
