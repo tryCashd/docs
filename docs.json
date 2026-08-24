@@ -94,12 +94,8 @@
         "header": "Cashd",
         "items": [
           {
-            "label": "Integration support",
-            "href": "mailto:integrations@trycashd.com"
-          },
-          {
-            "label": "Operations",
-            "href": "mailto:ops@trycashd.com"
+            "label": "Email Support",
+            "href": "mailto:partners@trycashd.com"
           }
         ]
       }

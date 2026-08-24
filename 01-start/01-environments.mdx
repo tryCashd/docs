@@ -3,17 +3,14 @@ title: "Environments"
 description: "Staging and production access."
 ---
 
-Cashd exposes two environments to merchants. You build and certify against
-staging, then move to production once certification passes.
+Cashd exposes two environments to merchants. You build and certify against staging, then move to production once certification passes.
 
 | Environment | Purpose | Host (`{base}`) |
-|---|---|---|
+| --- | --- | --- |
 | Staging | Implementation and certification | `https://staging-api.trycashd.com` |
 | Production | Live transactions | `https://api.trycashd.com` |
 
-Request paths in this documentation are written as `{base}/api/v1/...`.
-Substitute the host for the environment you are calling. A full staging call
-looks like this.
+Request paths in this documentation are written as `{base}/api/v1/...`. Substitute the host for the environment you are calling. A full staging call looks like this.
 
 ```http
 POST https://staging-api.trycashd.com/api/v1/merchant/transactions
@@ -23,34 +20,25 @@ Content-Type: application/json
 
 ## Credentials
 
-Credentials are environment-specific and are not interchangeable. A staging key
-is rejected in production and a production key is rejected in staging, both with
-[`unauthorized`](/errors/unauthorized).
+Credentials are environment-specific and are not interchangeable. A staging key is rejected in production and a production key is rejected in staging, both with [`unauthorized`](/errors/unauthorized).
 
 | Environment | How you get credentials |
-|---|---|
+| --- | --- |
 | Staging | Cashd provisions your staging credentials on request |
 | Production | Issued after certification passes — see [Go-live checklist](/05-go-live) |
 
 <Note>
-Request staging credentials from `integrations@trycashd.com`. There is no
-self-service signup for either environment.
+  Request staging credentials from `partners@trycashd.com`. There is no self-service signup for either environment.
 </Note>
 
-Handling of the key itself — format, storage, rotation, revocation — is the same
-in both environments. See [Authentication](/01-start/02-authentication).
+Handling of the key itself — format, storage, rotation, revocation — is the same in both environments. See [Authentication](/01-start/02-authentication).
 
 ## Test data on staging
 
-Consumer wallets, balances, and any merchant configuration your integration
-depends on are provisioned by Cashd. Ask `integrations@trycashd.com` for the
-test data your certification scenarios require, and confirm what is available
-before you script them.
+Consumer wallets, balances, and any merchant configuration your integration depends on are provisioned by Cashd. Ask `partners@trycashd.com` for the test data your certification scenarios require, and confirm what is available before you script them.
 
 Do not use production consumer accounts for testing.
 
 ## Rate limits
 
-Rate limits apply per environment and are stated at onboarding. Implement the
-`429` handling described in [Error handling](/errors/overview) regardless of the
-configured values.
+Rate limits apply per environment and are stated at onboarding. Implement the `429` handling described in [Error handling](/errors/overview) regardless of the configured values.
