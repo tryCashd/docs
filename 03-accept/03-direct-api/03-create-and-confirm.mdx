@@ -78,7 +78,8 @@ Content-Type: application/json
 
 `:id` accepts the `txn_`-prefixed identifier or the bare identifier.
 
-`void_reason` is `null` until the transaction is voided or expires. See
+`void_reason` is `null` unless the transaction is voided. Cashd may also set
+it when it expires an unconfirmed transaction. See
 [Voids](/02-concepts/04-voids#reasons).
 
 ## When to fulfil
