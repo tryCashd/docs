@@ -19,10 +19,6 @@ X-Idempotency-Key: <unique string, maximum 200 characters>
 | Same key, different body | [`idempotency_conflict`](/errors/idempotency_conflict). Do not retry; this is a bug in your integration. |
 | Header absent | Processed with no replay protection. |
 
-<Note>
-  The header is currently optional and its absence is not an error. It becomes required in a future API version. Send it now — without it, a retry after a network timeout can produce a second debit.
-</Note>
-
 ## Generating keys
 
 Generate one key **per payment intent**, not per HTTP attempt. Persist it on your own order record so every retry of that intent reuses it.
