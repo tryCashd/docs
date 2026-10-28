@@ -20,11 +20,16 @@ customer's locale.
 
 ## Cause
 
-The same `X-Idempotency-Key` was sent with a different request body. This is a defect in the caller: one key represents one payment intent.
+One of:
+
+- The same `X-Idempotency-Key` was sent with a different request body.
+- On `POST /merchant/transactions`, the key already belongs to a different transaction — another amount or another customer. Nothing is created and no SMS is sent.
+
+Either way this is a defect in the caller: one key represents one payment intent.
 
 ## What to do
 
-1. Generate a new key for the new request.
+1. Generate a new key for the new request — a UUID or ULID, not a bare sequential order number.
 2. Persist the key on your order record so retries of the same intent reuse it.
 3. Never generate a fresh key per HTTP attempt, and never reuse one across amounts or customers.
 
