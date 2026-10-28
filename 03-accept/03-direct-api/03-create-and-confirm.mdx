@@ -41,6 +41,10 @@ intent. A retry with a fresh key sends a second SMS and can open a second
 transaction against the same customer.
 </Warning>
 
+A key that already belongs to a different transaction — another amount or
+another customer — returns `409` [`idempotency_conflict`](/errors/idempotency_conflict)
+and creates nothing. See [Idempotency](/02-concepts/01-idempotency).
+
 Render the code countdown from `expires_at`. Do not hardcode the duration.
 Once `expires_at` passes, the code can no longer be confirmed. A confirm
 returns [`validation_failed`](/errors/validation_failed) and the transaction

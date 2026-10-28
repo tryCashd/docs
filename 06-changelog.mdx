@@ -4,6 +4,14 @@ description: "Documentation and API changes."
 hidden: true
 ---
 
+## 2026-10-28
+
+- Direct API: `POST /merchant/transactions` returns `409`
+  [`idempotency_conflict`](/errors/idempotency_conflict) when the key already
+  belongs to a different transaction — another amount or another customer.
+  Nothing is created. A retry of the same transaction with the same key still
+  returns the original. Use a UUID or ULID per payment intent.
+
 ## 2026-08-10
 
 Initial publication.
