@@ -33,13 +33,22 @@ Content-Type: application/json
 
 | Voidable | Not voidable |
 |---|---|
-| `pending_otp` | `settled` |
-| `authorized` | `failed` |
-| `redeemed` | `expired` |
+| `authorized` | `pending_otp` |
+| `redeemed` | `authorization_unknown` |
+| | `settled` |
+| | `failed` |
+| | `expired` |
 | | `reversed` |
 
 A non-voidable state returns
 [`validation_failed`](/errors/validation_failed).
+
+A `pending_otp` transaction cannot be voided. If the customer abandons it, let
+the confirmation code expire at `expires_at`; the transaction moves to
+`expired` and nothing is debited.
+
+A coupon sale is final and returns
+[`coupon_not_refundable`](/errors/coupon_not_refundable).
 
 ## Void window
 
@@ -53,7 +62,7 @@ Once a transaction is settled it cannot be voided through the API at all. Contac
 ## Reasons
 
 `void_reason` is optional when calling with an API key and required for portal
-users. Permitted values:
+users. Send only these values:
 
 | Value |
 |---|
@@ -77,7 +86,12 @@ you can render a dropdown without hardcoding copy.
 | Transaction state | Effect of the void |
 |---|---|
 | `redeemed` | Value returns to the customer's Cashd wallet |
-| `pending_otp`, `authorized` | The session or authorisation is terminated |
+| `authorized` | The authorisation is terminated |
+
+If the reversal itself fails, Cashd returns
+[`void_failed`](/errors/void_failed) and nothing changes. Read
+`GET /merchant/transactions/:id` before you tell the customer they have been
+refunded.
 
 <Warning>
 A void reverses the Cashd side only. If you have already released goods,

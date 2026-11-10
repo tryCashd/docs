@@ -37,7 +37,7 @@ Every `4xx` and `5xx` response uses one shape.
 | Caller | `400`, `401`, `403`, `409`, `404` | Fix the request or the credential. Never retry unchanged |
 
 <Warning>
-  Never retry a `422`. The request will be rejected identically, and on code-entry paths it consumes the customer's attempt allowance.
+  Never retry a `422`. The request will be rejected identically, and on code-entry paths it consumes the customer's attempt allowance. The one exception is [`void_failed`](/errors/void_failed).
 </Warning>
 
 ## When the outcome is unknown
@@ -59,6 +59,8 @@ Read `GET /merchant/transactions/:id` and act on the returned status. Do not cre
 | [`max_attempts`](/errors/max_attempts) | `422` |
 | [`merchant_inactive`](/errors/merchant_inactive) | `422` |
 | [`void_window_expired`](/errors/void_window_expired) | `422` |
+| [`void_failed`](/errors/void_failed) | `422` |
+| [`coupon_not_refundable`](/errors/coupon_not_refundable) | `422` |
 | [`checkout_unavailable`](/errors/checkout_unavailable) | `422` |
 | [`amount_unavailable`](/errors/amount_unavailable) | `422` |
 | [`checkout_verification_required`](/errors/checkout_verification_required) | `422` |
