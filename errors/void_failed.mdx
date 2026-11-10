@@ -1,0 +1,54 @@
+---
+title: "void_failed"
+description: "HTTP 422 — business error returned by the Cashd API."
+---
+
+| | |
+|---|---|
+| Code | `void_failed` |
+| HTTP status | `422` |
+| Class | Business |
+| Surface | Merchant API |
+| Safe to retry | Yes, after checking the transaction status |
+
+## Message
+
+Cashd returns this message in both languages. Render the one matching your
+customer's locale.
+
+> The reversal didn't go through. Nothing was changed.
+| Hint | Try again. If it keeps failing, contact support before telling the customer they've been refunded. |
+
+## Cause
+
+The void was accepted but the reversal could not be completed. Nothing was
+reversed and no value moved. The transaction keeps its previous status.
+
+This code is also returned when `void_reason` is not one of the
+[permitted values](/02-concepts/04-voids#reasons). Retrying with the same value
+fails the same way.
+
+## What to do
+
+1. Check that `void_reason` is a permitted value.
+2. Read `GET /merchant/transactions/:id`. If the status is not `reversed`, retry the void.
+3. If it keeps failing, contact `ops@trycashd.com` with the `request_id`. Do not tell the customer they have been refunded.
+
+This is the one `422` that is safe to retry.
+
+## Response shape
+
+```json
+{
+  "error": {
+    "code": "void_failed",
+    "message_en": "...",
+    "message_ar": "...",
+    "doc_url": "https://docs.trycashd.com/errors/void_failed",
+    "request_id": "req_01HW..."
+  }
+}
+```
+
+Log `request_id` and quote it in any support request. See
+[Error handling](/errors/overview).
